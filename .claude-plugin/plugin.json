@@ -1,6 +1,6 @@
 {
   "name": "konseputo",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Anti-overengineering engineering suite: Go-first microservice backends + Vue/Nuxt frontends, plus review, debt, humanizer, md-generator, project-management, legacy, ai, security, devops, mobile, brainstorm, systematic-debug, dependency-audit, shrink, clone, goal, artifact, wiki; konseputo router entry point. Ladder + day-one baseline + AI-tells kill list. /konseputo-help lists all.",
   "author": {
     "name": "Aki"
