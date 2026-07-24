@@ -1,0 +1,60 @@
+{
+  "name": "konseputo",
+  "version": "1.0.4",
+  "description": "Anti-overengineering engineering suite: Go-first microservice backends + Vue/Nuxt frontends, plus review, debt, humanizer, md-generator, project-management, legacy, ai, security, devops, mobile, brainstorm, systematic-debug, dependency-audit, shrink, clone, goal, artifact, wiki; konseputo router entry point. Ladder + day-one baseline + AI-tells kill list. /konseputo-help lists all.",
+  "author": {
+    "name": "Aki"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/konseputo-activate.js\"",
+            "timeout": 5,
+            "statusMessage": "Loading konseputo mode..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/konseputo-mode-tracker.js\"",
+            "timeout": 5,
+            "statusMessage": "Tracking konseputo mode..."
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/konseputo-subagent.js\"",
+            "timeout": 5,
+            "statusMessage": "Loading konseputo mode..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/konseputo-validate-write.js\"",
+            "timeout": 5,
+            "statusMessage": "Checking konseputo markers..."
+          }
+        ]
+      }
+    ]
+  }
+}

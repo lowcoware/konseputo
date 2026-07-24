@@ -1,0 +1,42 @@
+# Handoff — from the skill that decided WHAT, to this skill's HOW
+
+This skill answers "how do I render this as a shareable HTML artifact." It
+never answers "should this document exist," "what should it say," or "what
+cadence does it get written on" — those are the calling skill's job, same
+split konseputo-md-generator has with konseputo-project-management for Markdown.
+
+## Where an artifact request comes from
+
+| Source | Produces | Nearest gallery example |
+|---|---|---|
+| konseputo-project-management's weekly-checkpoint playbook | status report | 11-status-report.html |
+| konseputo-project-management's retrospective, or an incident write-up | incident report | 12-incident-report.html |
+| konseputo-project-management's spec-driven.md output, decomposed into phases | implementation plan | 16-implementation-plan.html |
+| konseputo-review's findings on a diff, or konseputo-pm's review.md | PR review summary / PR write-up | 03-code-review-pr.html, 17-pr-writeup.html |
+| konseputo-debt's ledger, or konseputo-pm's triage-incoming-request playbook | triage board | 18-editor-triage-board.html |
+| konseputo-goal's ROADMAP.md + phase specs | plan artifact (genres.md "plan") | 09-slide-deck.html, 16-implementation-plan.html |
+| konseputo-frontend/konseputo-backend architecture, konseputo-legacy's blast-radius output | architecture diagram (genres.md "diagram") | 04, 13, 21 |
+
+## The handoff contract
+
+1. **Content is already decided** by the calling skill — its Markdown
+   output (a spec, a retro, a review, a debt ledger) is the SOURCE OF
+   TRUTH for what the artifact says. This skill formats it as HTML; it
+   does not invent scope, add sections the source doesn't have, or pad a
+   short source into a longer artifact (genres.md's "plan" genre states
+   this explicitly, but it holds for every genre).
+2. **Never invent data to fill the artifact out.** A metric, a name, a
+   date not present in the source stays out — or gets an explicit
+   placeholder callout, never a plausible-looking fake number (same rule
+   as ai-tells.md's fake-precision ban, and the gallery's own sample-data
+   honesty note in `gallery.md`).
+3. **Voice pass** — same step konseputo-md-generator takes: hand prose content
+   to konseputo-humanizer before calling it done, per its genre-calibration for
+   the doc type. Applies to a status report or incident write-up; doesn't
+   apply to diagram label text (too short to have a "voice").
+4. **This is not a konseputo-md-generator replacement.** If the deliverable is
+   going to live in an Obsidian vault as an ongoing note, it's Markdown —
+   konseputo-md-generator's job. This skill is for a document meant to be
+   opened as a standalone artifact (shared as a file, rendered in a
+   browser, pasted into a PR, dropped in a channel) — a different delivery
+   shape, not a better one.

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "konseputo",
+  "description": "Anti-overengineering microservice backend (Go-first) + Vue/Nuxt frontend engineering suite. Ladder + day-one baseline for services, register split + AI-tells kill list for UI.",
+  "owner": {
+    "name": "Aki"
+  },
+  "plugins": [
+    {
+      "name": "konseputo",
+      "description": "konseputo (router), konseputo-backend, konseputo-frontend, konseputo-review, konseputo-debt, konseputo-humanizer, konseputo-md-generator, konseputo-project-management, konseputo-legacy, konseputo-ai, konseputo-security, konseputo-devops, konseputo-mobile, konseputo-brainstorm, konseputo-systematic-debug, konseputo-dependency-audit, konseputo-shrink, konseputo-clone, konseputo-goal, konseputo-artifact, konseputo-wiki, konseputo-help.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
