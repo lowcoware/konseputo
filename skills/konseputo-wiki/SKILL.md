@@ -1,6 +1,6 @@
 ---
 name: konseputo-wiki
-description: "Maintain a whole Obsidian vault as a living project wiki — structure/taxonomy, Maps of Content, vault health (orphan detection, broken-link healing, stats, TOC), Canvas diagrams, Bases database views, and CLI vault automation. Not per-note syntax formatting (konseputo-md-generator) and not deciding what gets written (konseputo-project-management) — this decides WHERE things live and keeps the vault connected and healthy as it grows. Triggers: \"/konseputo-wiki\", \"веди вики проекта\", \"создай вики\", \"vault health\", \"maintain the wiki\", \"построй MOC\", \"найди сироты\", \"почини битые ссылки\", \"canvas диаграмма\", \"obsidian base\", \"vault stats\", \"структура вольта\". From kepano/obsidian-skills (MIT) + tpitsunov/obsidian-skills (MIT) + adriangrant/Obsidian-SKILLS (MIT)."
+description: "Maintain a whole Obsidian vault as a living project wiki — structure/taxonomy, Maps of Content, vault health (orphan detection, broken-link healing, stats, TOC), Canvas diagrams, Bases database views, CLI vault automation, and a real multi-page team wiki (Home/Getting-Started/Architecture/module pages with real code, hostable via Quartz). Not per-note syntax formatting (konseputo-md-generator) and not deciding what gets written (konseputo-project-management) — this decides WHERE things live and keeps the vault connected and healthy as it grows. Triggers: \"/konseputo-wiki\", \"веди вики проекта\", \"создай вики\", \"team wiki\", \"onboarding wiki\", \"vault health\", \"maintain the wiki\", \"построй MOC\", \"найди сироты\", \"почини битые ссылки\", \"canvas диаграмма\", \"obsidian base\", \"vault stats\", \"структура вольта\". From kepano/obsidian-skills (MIT) + tpitsunov/obsidian-skills (MIT) + adriangrant/Obsidian-SKILLS (MIT)."
 ---
 
 # konseputo-wiki
@@ -40,6 +40,11 @@ elsewhere.
 6. **Shell automation against a running vault** → `references/cli.md`.
 7. **Inbox triage, glossary, tagging, splitting an oversized doc** →
    `references/capture-and-atomize.md`.
+8. **A team-facing wiki the whole project reads and feeds — specs,
+   decisions, onboarding, possibly hosted publicly** →
+   `references/deep-dive.md`: real multi-page site (Home, Getting Started,
+   Architecture, per-module pages with verbatim code excerpts, a
+   Decisions feed), not a single index note.
 
 ## Locate the skill (for script invocation)
 
@@ -68,7 +73,8 @@ operation for exact arguments.
 | references/bases-functions.md | full function catalog (Date/String/Number/List/File/Link/Object/RegExp) | writing a non-trivial formula |
 | references/cli.md | vault-CRUD shell commands, environment footguns (Linux sandbox, Snap) | scripting a vault operation from the shell |
 | references/capture-and-atomize.md | inbox triage, glossary building, tagging, zettel atomization of oversized docs | organizing raw/oversized material into the vault's shape |
-| references/self-reference.md | self-generated reference artifact — a real `_MOC_<Name>.md` built by this skill's own moc.md workflow, indexing the suite's own skills | checking whether current MOC output still matches this skill's own baseline |
+| references/deep-dive.md | team-facing multi-page wiki (Home, Getting Started, Architecture, module pages with verbatim code, Decisions feed), plus hosting a vault as a real static site | the wiki is meant to be the whole team's shared home base, not just an internal index |
+| references/self-reference.md | self-generated reference artifact — a real multi-file deep-dive wiki (`references/self-reference/`) built by this skill's own deep-dive.md workflow, documenting the suite itself with verbatim code excerpts | checking whether current deep-dive output still matches this skill's own baseline |
 
 ## Scripts
 

@@ -126,6 +126,11 @@ const BARE_MD_ALLOWLIST = [
   'MEMORY.md', // konseputo memory index — generated in the consumer's memory dir, not a suite file
   // konseputo-wiki generic example/generated filenames — the consumer's vault, not suite files
   'Notes.md', 'Glossary.md', 'MOC_Project.md',
+  // konseputo-wiki deep-dive.md page-name convention — generic team-wiki page names,
+  // real files under skills/konseputo-wiki/references/self-reference/ (a subdirectory
+  // check-skills.js doesn't scan), not top-level suite reference files
+  'Home.md', 'Getting-Started.md', 'Architecture.md', 'Decisions.md', 'MOC_Reference.md',
+  'module-konseputo-goal.md', 'module-konseputo-wiki.md',
   'ADR-014-event-driven-communication.md', // konseputo-md-generator/style.md — good-name example
   'ADR-014-the-decision-to-adopt-an-event-driven-architecture-for-services.md', // same, bad-name contrast
 ];

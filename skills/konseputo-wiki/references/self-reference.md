@@ -1,70 +1,27 @@
-# MOC: Skills
+# Self-reference artifact — a real multi-file deep-dive wiki, not a single index
 
-The konseputo suite's own 22 skills, grouped by what they own — a self-generated
-reference for `konseputo-wiki`, built following its own `moc.md` workflow
-against this repo's `skills/` folder instead of a project's `/specs/` or
-`/adrs/`.
+This used to be one MOC file listing the suite's 22 skills. `deep-dive.md`
+added a proper team-wiki workflow — multiple linked pages with real code,
+not a compressed index — so this self-reference was rebuilt to match: a
+real, navigable, multi-page wiki about the konseputo suite itself,
+following `deep-dive.md`'s own page set.
 
-## Engineering domains
+Open `references/self-reference/` — start at `_MOC_Reference.md` or
+`Home.md`, both link onward through every other page:
 
-- [[konseputo-backend]] — Go-first microservices: day-one baseline, the ladder's
-  rungs, hardening (Go/Python), events/outbox/DLQ, per-store playbooks.
-- [[konseputo-frontend]] — Vue 3 / Nuxt 4 / Tailwind v4: AI-tells kill list,
-  design tokens, motion craft, a11y/interface audit.
-- [[konseputo-mobile]] — Flutter-first, React Native, native SwiftUI/Kotlin;
-  mobile-specific hardening and platform baselines.
-- [[konseputo-ai]] — RAG pipelines, Qdrant, MCP server/tool design and
-  security, LLM gateway, subagent orchestration.
-- [[konseputo-devops]] — Docker Compose, Traefik/TLS, GitHub Actions CI,
-  backup/DR — no Kubernetes.
+- `_MOC_Reference.md` — nav hub, one line per page (the `moc.md` workflow
+  still applies at this smaller scale — a page set still gets a map)
+- `Home.md` — what the suite is, current focus
+- `Getting-Started.md` — real install commands from the actual plugin/
+  marketplace manifests
+- `Architecture.md` — the real folder layout + a verbatim excerpt from
+  `check-skills.js`'s cross-reference check
+- `module-konseputo-goal.md` — verbatim excerpt from `claim-run.sh`
+- `module-konseputo-wiki.md` — verbatim excerpt from `gather_data.py`,
+  plus this directory's own evidence-honesty note
+- `Decisions.md` — ADR-001 (the reference-artifact directive) as it landed
 
-## Quality and safety
-
-- [[konseputo-security]] — auth/authz architecture, rate limiting, CORS,
-  secrets management, webhook signature verification.
-- [[konseputo-dependency-audit]] — supply-chain vetting, lockfile discipline,
-  slopsquatting, CVE/EPSS triage before and after adding a dep.
-- [[konseputo-review]] — diff review against the suite's own ruleset:
-  overengineering, AI-typical bug patterns, architecture decay.
-- [[konseputo-systematic-debug]] — disciplined bug hunting for an OBSERVED
-  failure: delta debugging, flaky tests, concurrency bugs.
-- [[konseputo-legacy]] — characterization tests, blast-radius assessment,
-  strangler fig for code nobody fully understands yet.
-- [[konseputo-shrink]] — repo-wide overengineering audit, not a single diff.
-- [[konseputo-debt]] — harvests `konseputo:` ceiling markers into one ledger,
-  flags markers with no upgrade trigger.
-
-## Knowledge and output formatting
-
-- [[konseputo-wiki]] — this skill: vault structure, MOCs, Canvas, Bases, vault
-  health.
-- [[konseputo-md-generator]] — per-note Obsidian Markdown syntax: callouts,
-  embeds, properties, wikilinks.
-- [[konseputo-artifact]] — single-file HTML documents: reports, plans,
-  diagrams, calibrated against a vendored example gallery.
-- [[konseputo-humanizer]] — voice-calibrated editing, AI-tell removal in
-  prose.
-- [[konseputo-clone]] — web-clone assessment ladder (L1-L6), legal framework
-  for scraping a target site.
-
-## Process and planning
-
-- [[konseputo-project-management]] — spec-driven workflow, ADR lifecycle,
-  mechanical playbooks (checkpoint, retro, triage).
-- [[konseputo-goal]] — phased autonomous execution engine: plan, execute,
-  verify, audit.
-- [[konseputo-brainstorm]] — structured pick-an-approach panel before a
-  hard-to-reverse decision.
-
-## Router and reference card
-
-- [[konseputo]] — universal entry point: describes a situation, names the
-  best-fit skill.
-- [[konseputo-help]] — one-screen reference card for the whole suite.
-
-## Rebuild trigger
-
-Rebuild when the skill count in `skills/` changes materially (a handful of
-new/removed skills, not every renamed reference file) — same threshold
-`vault-health.md`'s stats script would flag in a real vault. Last built:
-2026-07-24, 22 skills.
+Every code excerpt is copied verbatim from the real file at the cited
+path — none reconstructed from memory — per `deep-dive.md`'s non-negotiable
+rule. This is the suite documenting itself, not a fictional stand-in
+project.
