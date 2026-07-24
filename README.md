@@ -146,6 +146,12 @@ konseputo отвечает за инженерию под анти-оверин�
   konseputo-md-generator владеют дисциплиной проектной вики и Obsidian-ФОРМАТОМ
   генерируемых доков; obsidian-mind владеет СИСТЕМОЙ личного волта вокруг них —
   ставь, когда волт это память, а не просто формат вывода.
+- **GitLab MCP** — [zereight/gitlab-mcp](https://github.com/zereight/gitlab-mcp)
+  (`@zereight/mcp-gitlab` на npm). Не скилл, MCP-сервер: даёт агенту прямые
+  вызовы над GitLab API (issues, MR, пайплайны, файлы репо) вместо
+  ручных `curl`/`glab`. Установка и границы: `shared/gitlab-mcp.md`.
+  Ставь, когда проект на GitLab и работа многократно трогает MR/issues/
+  пайплайны за сессию — разовый `git push` в этом не нуждался.
 
 ## Ещё
 

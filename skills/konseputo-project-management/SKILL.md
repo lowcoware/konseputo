@@ -80,6 +80,7 @@ apply to every playbook and command below, not repeated per-file.
 | references/templates.md | schema for every artifact this skill writes | filling any artifact |
 | references/conventions.md | config resolution, stdout/--apply, ask-vs-don't-ask, severity triage, citation discipline, subagent orchestration patterns | every invocation, cross-cutting |
 | ../../shared/velocity.md | why spec-driven work pays for itself — rework/acceptance-rate data, spec-quality-vs-iterations evidence | justifying spec-first over ad-hoc prompting |
+| ../../shared/gitlab-mcp.md | `@zereight/mcp-gitlab` setup, when to use it vs `glab`/raw API | reviewing/triaging MRs and issues on a GitLab-hosted project |
 | ../../shared/subagents.md | subagent contract, orchestration patterns, handoff discipline — canonical owner | any PM playbook fanning out subagents |
 
 ## Handoff to execution

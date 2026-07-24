@@ -31,6 +31,7 @@ and makes drift/decay visible before it bites.
 | references/compose.md | multi-env layout, `secrets:`, healthcheck `depends_on`, env-drift trap | writing/reviewing Compose files |
 | references/dockerfile.md | multi-stage Go/Python, non-root, cache-order, `.dockerignore`, digest pins | writing a Dockerfile |
 | references/ci.md | build/test/lint gate, SSH auto-deploy, health gate, `pull_request_target` exfil footgun | GitHub Actions workflow |
+| ../../shared/gitlab-mcp.md | `@zereight/mcp-gitlab` setup, when to use it vs `glab`/raw API | project hosted on GitLab, no MCP tool in the available set yet |
 | references/cert-tls.md | Traefik ACME resolvers, challenge types, rate limits, renewal-failure alerting | edge TLS / cert automation |
 | references/deploy.md | rolling restart, blue-green on one VPS, migration ordering, rollback | deploying / a deploy script |
 | references/decay.md | orphaned volumes, image bloat, cert-expiry blind spots, `.env` drift | periodic infra hygiene |

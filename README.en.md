@@ -148,6 +148,13 @@ each owning something konseputo deliberately does not duplicate:
   konseputo-md-generator own the project-wiki discipline and Obsidian FORMATTING
   of generated docs; obsidian-mind owns the personal-vault SYSTEM around them —
   install it when the vault is the memory, not just an output format.
+- **GitLab MCP** — [zereight/gitlab-mcp](https://github.com/zereight/gitlab-mcp)
+  (`@zereight/mcp-gitlab` on npm). Not a skill, an MCP server: gives the
+  agent direct tool calls over the GitLab API (issues, MRs, pipelines, repo
+  files) instead of hand-rolled `curl`/`glab` invocations. Setup and
+  boundary: `shared/gitlab-mcp.md`. Install it when the project is
+  GitLab-hosted and the work touches MRs/issues/pipelines repeatedly in one
+  session — a one-off `git push` never needed it.
 
 ## More
 
