@@ -9,7 +9,7 @@ From nexu-io/open-design web-clone (Apache-2.0), re-expressed for the konseputo 
 
 Cloning a website is a repeatable pipeline, not vibes: recon -> assess ->
 harvest -> rebuild -> visual-diff -> fidelity audit. Everything lands in the
-current project: `./NOTES.md`, `RECON/`, `./CLONE_REPORT.md`, `./CLONE_AUDIT.md`.
+current project: `NOTES` (project-root notes file), `RECON/`, the comparison report, and the fidelity-audit report.
 
 **Setup**: scripts are standalone node + Playwright. Playwright is a peer
 dependency the USER'S project provides — `npm install -D playwright` once in the
@@ -98,7 +98,7 @@ wiring error. Full discipline + baseline-first gate:
 | `interaction-probe.mjs --url U --out RECON/interactions` | Scroll/hover/safe-click/canvas-drag state evidence |
 | `sourcemap-hunt.mjs --recon RECON/original-recon.json --out RECON/sourcemaps` | Find + download source maps from JS chunks |
 | `dna-scaffold.mjs --recon ... --out RECON/design-dna.json` | Design-DNA skeleton, pre-filled from recon (visual/rebrand modes only) |
-| `compare-recon.mjs --original ... --clone ... --out ./CLONE_REPORT.md` | Original-vs-clone comparison report |
+| `compare-recon.mjs --original ... --clone ... --out ./<report-name>.md` | Original-vs-clone comparison report |
 | `visual-diff.mjs --original a.png --clone b.png --out diff.json` | Pixel diff score + difference image |
 | `audit-clone.mjs --project . --recon ... --strict` | Trackers, brand residue, external-URL risk + fidelity gates (exit 2) |
 
@@ -111,6 +111,7 @@ wiring error. Full discipline + baseline-first gate:
 | `references/static-mirror.md` | Astro/Vite SSG/Hugo full-mirror recipe, Typekit self-hosting |
 | `references/design-dna.md` | Structured design identity for visual-clone/rebrand modes |
 | `references/legal.md` | hiQ v. LinkedIn, robots.txt/ToS enforceability, why asset copyright is a separate question from access | before or during any live scrape, and when the boundaries below feel ambiguous |
+| `references/self-reference.md` | self-generated reference artifact — the exact comparison-report shape `compare-recon.mjs` produces, filled with explicitly-labeled illustrative values (not a fabricated real-clone claim, per this skill's own evidence-honesty rule) | checking whether current report output still matches this skill's own baseline |
 
 ## Ethics / Boundaries
 
