@@ -98,7 +98,7 @@ this rule.
 | references/embeds.md | note/image/PDF/audio/block embeds, sizing | pulling content from another note |
 | references/doc-types.md | ADR / service README / status report / runbook templates: property schema + section skeleton (ADR skeleton is owned by konseputo-project-management/adr.md) | starting a new doc of a known type |
 | references/style.md | when a callout beats plain text, when Mermaid earns its lines, wikilink/folder conventions, MOC pattern | any judgment call on "should I use X here" |
-| references/showcase.md | one file exercising every syntax element in this skill — all 13 callout types, every wikilink/embed form, tags, comments, highlight, math, Mermaid, footnotes, GFM tables/checklists | open in Obsidian to sanity-check rendering, or as a lookup when unsure a construct is spelled right |
+| references/showcase.md | one file exercising every syntax element in this skill — all 13 callout types, every wikilink/embed form, tags, comments, highlight, math, Mermaid, footnotes, GFM tables/checklists. Doubles as this skill's own self-generated reference artifact (properties + syntax written by this skill's own rules, not hand-templated) — the reference-artifact directive is already satisfied here, not a gap | open in Obsidian to sanity-check rendering, or as a lookup when unsure a construct is spelled right |
 
 ## Adjacent skills
 

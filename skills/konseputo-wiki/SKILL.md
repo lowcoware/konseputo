@@ -68,6 +68,7 @@ operation for exact arguments.
 | references/bases-functions.md | full function catalog (Date/String/Number/List/File/Link/Object/RegExp) | writing a non-trivial formula |
 | references/cli.md | vault-CRUD shell commands, environment footguns (Linux sandbox, Snap) | scripting a vault operation from the shell |
 | references/capture-and-atomize.md | inbox triage, glossary building, tagging, zettel atomization of oversized docs | organizing raw/oversized material into the vault's shape |
+| references/self-reference.md | self-generated reference artifact — a real `_MOC_<Name>.md` built by this skill's own moc.md workflow, indexing the suite's own skills | checking whether current MOC output still matches this skill's own baseline |
 
 ## Scripts
 

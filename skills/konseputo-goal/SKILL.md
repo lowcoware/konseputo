@@ -98,6 +98,7 @@ under `$KONSEPUTOGOAL_DIR`; all run artifacts under `$KONSEPUTOGOAL_ROOT`.
 | references/goal-format.md | what `/goal` is on Claude Code + Codex, the single-`/goal` shape, transcript blocks |
 | references/repo-state-comparison.md | complete-working-tree vs baseline comparison strategy (audit + cleanliness) |
 | ../../shared/velocity.md | why the execution engine is shaped this way — rework dominates over generation speed, spec quality vs. iteration count, when parallel phases pay off |
+| references/self-reference.md | self-generated reference artifact — a real ROADMAP + STATE pair, built by this skill's own templates, documenting the reference-artifact rollout as a completed run | checking whether current ROADMAP/STATE output still matches this skill's own baseline |
 
 ## Scripts
 

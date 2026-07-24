@@ -50,6 +50,7 @@ text, means the wrong genre was picked in step 1.
 | references/dark-mode.md | the four mandatory dark-mode pieces + reference implementation | every artifact |
 | references/pan-zoom.md | SVG pan/zoom technique: 1:1 pan, cursor-anchored zoom, click-after-drag suppression | diagram genre |
 | references/handoff.md | where an artifact request comes from (konseputo-pm/review/debt/goal), the content-vs-format contract | the request originates from another konseputo skill's output |
+| references/self-reference.html | self-generated reference artifact — Apple design system (konseputo-frontend/references/design-systems), general+plan+diagram genre techniques in one file, the skill's own output measured against itself, not the vendored gallery | checking whether current output still matches this skill's own baseline; regenerate and diff when the rules above change |
 
 ## Boundaries
 

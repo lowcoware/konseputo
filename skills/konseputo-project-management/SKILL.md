@@ -79,6 +79,7 @@ apply to every playbook and command below, not repeated per-file.
 | references/playbooks.md | create-task, update-changelog, weekly-checkpoint, retrospective, triage-incoming-request, post-launch-roadmap | one of these events happens |
 | references/templates.md | schema for every artifact this skill writes | filling any artifact |
 | references/conventions.md | config resolution, stdout/--apply, ask-vs-don't-ask, severity triage, citation discipline, subagent orchestration patterns | every invocation, cross-cutting |
+| references/self-reference.md | self-generated reference artifact — a real ADR (ADR-001), built by this skill's own adr.md template, documenting the reference-artifact directive itself | checking whether current ADR output still matches this skill's own baseline |
 | ../../shared/velocity.md | why spec-driven work pays for itself — rework/acceptance-rate data, spec-quality-vs-iterations evidence | justifying spec-first over ad-hoc prompting |
 | ../../shared/gitlab-mcp.md | `@zereight/mcp-gitlab` setup, when to use it vs `glab`/raw API | reviewing/triaging MRs and issues on a GitLab-hosted project |
 | ../../shared/subagents.md | subagent contract, orchestration patterns, handoff discipline — canonical owner | any PM playbook fanning out subagents |
