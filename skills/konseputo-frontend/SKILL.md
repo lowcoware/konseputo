@@ -68,6 +68,7 @@ Design explicitly doesn't matter (internal tool, admin CRUD, throwaway prototype
 | [references/image-pipeline.md](references/image-pipeline.md) | image-gen tool available + visually important task — generate section references BEFORE code, extraction checklists, logo concept methods |
 | [references/template-catalog.md](references/template-catalog.md) | brief matches a packaged shape (deck/prototype/wireframe/dashboard/video) — map of open-design templates and the usage protocol |
 | [references/brand-systems-catalog.md](references/brand-systems-catalog.md) | brief says "like <brand>" or names an aesthetic family — map of 153 open-design brand packages (DESIGN.md + tokens.css each) |
+| [references/brand-extraction.md](references/brand-extraction.md) | named brand isn't in the 153-package catalog — extraction pipeline (live URL/codebase/screenshots) to build the evidence fresh |
 | [references/content.md](references/content.md) | long lists, spec sheets, quotes, or copy self-audit — positive recipes past a ban |
 | [references/vocabulary.md](references/vocabulary.md) | picking a hero/nav/scroll/card pattern — names to design with |
 | [references/redesign.md](references/redesign.md) | modernizing an existing brand/design (not unfamiliar code — that's konseputo-legacy) |
@@ -77,7 +78,7 @@ Design explicitly doesn't matter (internal tool, admin CRUD, throwaway prototype
 | [references/gsap-api.md](references/gsap-api.md) | writing GSAP against the raw API — tween/timeline/ScrollTrigger option tables, plugin configs (SplitText/MorphSVG/Flip/Draggable), gsap.utils, Nuxt lazy-plugin loader |
 | [references/tokens.md](references/tokens.md) | tokens/theming — DESIGN.md protocol, `@theme`, dark surface ladder, Lila Rule |
 | [references/preflight.md](references/preflight.md) | before delivering ANY UI — mechanical checks, one unticked = not done |
-| [references/interface-audit.md](references/interface-audit.md) | reviewing a component/page beyond the greps — 48 checkable interface rules (a11y, hydration, touch/safe-area, i18n, dark-mode) with file:line output |
+| [references/interface-audit.md](references/interface-audit.md) | reviewing a component/page beyond the greps — 55 checkable interface rules (a11y, hydration, touch/safe-area, i18n, dark-mode) with file:line output |
 | [references/design-contract.md](references/design-contract.md) | vague taste input ("like X", screenshots, adjectives) — evidence contract producing the project DESIGN.md, keep/change/do-not-copy boundary + brief-to-tokens resolver |
 | [references/reference-mining.md](references/reference-mining.md) | combining 2+ vendored sources on request, or greenfield brand-register work with no reference named — pick one structure + one token system + one motion voice, audit-trail the mix, real-brand identity boundary |
 | [references/reference-critique.md](references/reference-critique.md) | reviewing/improving an EXISTING site against the vendored corpus — nearest-fit reference pick, per-axis gap analysis, ranked biggest-gap-first findings |
@@ -88,6 +89,7 @@ Design explicitly doesn't matter (internal tool, admin CRUD, throwaway prototype
 | [references/seo-i18n.md](references/seo-i18n.md) | SEO or i18n work — hreflang, locale routing, missing-key trap |
 | [references/ux-laws.md](references/ux-laws.md) | layout/IA decisions — 29 UX laws as checkable rules + folklore corrections |
 | [references/rtl-i18n-ui.md](references/rtl-i18n-ui.md) | RTL or bidi text in UI — logical properties, bdi/dir rules, mirror tables (seo-i18n owns routing) |
+| [references/typography-cjk.md](references/typography-cjk.md) | Japanese/CJK content — horizontal metrics (em not ch, kinsoku) and vertical `writing-mode` rules |
 | [references/rendering-pwa.md](references/rendering-pwa.md) | picking a render mode or adding PWA/offline — routeRules decision |
 | [../../shared/communication.md](../../shared/communication.md) | chat tone (RU), thinking compression |
 | [../../shared/completeness.md](../../shared/completeness.md) | any code/doc deliverable — no truncation stubs, scope-count lock, clean PAUSED breakpoints |

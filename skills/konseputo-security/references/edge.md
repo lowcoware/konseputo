@@ -54,6 +54,21 @@ one-off bug.
 be an explicit list of known frontend origins (dev + prod Nuxt domains),
 never a blanket echo.
 
+**A second, distinct failure mode: CORS set at more than one layer.**
+Traefik is the blessed layer for CORS per the rule above — but a service
+that ALSO sets its own `Access-Control-Allow-Origin` (framework default
+middleware left enabled, or a leftover from before the edge migration)
+produces duplicate or conflicting headers, which browsers reject outright
+regardless of whether either individual value was correct. Pick exactly
+one authoritative layer — Traefik when the service sits behind it, the
+service only when genuinely unproxied — and verify every other layer
+stays silent. If a dual-layer topology is genuinely unavoidable, strip
+the upstream header explicitly rather than letting both pass through
+(`header_down -Access-Control-Allow-Origin` in Caddy-shaped configs,
+`proxy_hide_header` in Nginx-shaped ones — the Traefik-equivalent
+middleware for this is stripping the backend's own CORS headers before
+Traefik adds its own).
+
 Default security-headers middleware, baked in at the edge, not per-service:
 
 ```yaml

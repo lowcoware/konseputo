@@ -33,6 +33,14 @@ patterns: out of scope, run /code-review.`
 SEV: `BLOCK` (violates baseline/carve-out/ban — not mergeable), `WARN` (fix
 now, cheaper than later), `INFO` (note, no action forced).
 
+**The bar for surfacing a finding scales inversely with severity.** For a
+clear bug/security issue, favor recall — don't skip a genuine problem
+just because the trigger scenario is narrow. For a lower-severity style/
+quality concern, favor precision — don't flag it unless a concrete
+scenario can be named. When confidence is limited and potential impact is
+high, report it with the uncertainty stated explicitly; when confidence
+is limited and impact is low, prefer not reporting over guessing.
+
 ### BE tags
 
 | Tag | Finds |
@@ -115,6 +123,22 @@ default, full reconstruction + blast-radius for auth/money/public-contract
 diffs. Full method, doc-cited-intent variant, and axis separation:
 `references/intent-reconstruction.md`.
 
+## Two invocation shapes — tag sweep vs. senior-engineer questions
+
+Default invocation is the mechanical tag sweep above (`over:`/`baseline:`/
+etc.). A second, separately-invokable shape exists for when the user
+wants judgment instead of a checklist: **reviewer questions** mode
+suspends the tag format entirely and instead asks 3-5 questions a senior
+engineer would actually ask about this diff (about intent, safety,
+completeness), each anchored to a real file:line — a generic question
+("did you test this?") is not this mode's output, a specific one
+("`orders.go:44` retries on 4xx here — was that intentional, or should
+only 5xx retry?") is. Use it when the user asks to be walked through
+concerns rather than handed a finding list, or when the diff is
+judgment-heavy (a design tradeoff, not a rule violation) and forcing it
+into tag-sweep format would understate the real question. Don't run both
+shapes on the same request unless asked — pick the one the ask calls for.
+
 ## References — load on demand
 
 | File | Covers | Load when |
@@ -125,7 +149,7 @@ diffs. Full method, doc-cited-intent variant, and axis separation:
 | references/intent-reconstruction.md | full intent-reconstruction method: doc-cited-intent variant, boundary-crossing filter, adaptive depth/blast-radius, standards-vs-spec axes | a high-stakes diff (auth/money/migration/public contract) needs the deep pass |
 | references/review-process.md | review-as-an-act research: size-vs-defect-detection data, chunking/triage for agent-scale diffs, automation bias, LLM-reviewer false-positive limits, why green tests aren't proof | a diff exceeds ~400 lines, or before trusting a fully-green agent-authored diff |
 | ../konseputo-frontend/references/motion-craft.md | motion value catalog: gate, easing/duration/spring values, escalation triggers, remedial hierarchy — cite values exactly, never approximate | a FE diff produces a `motion:` finding |
-| ../konseputo-frontend/references/interface-audit.md | 48 checkable interface rules beyond the mechanical greps: a11y structure, hydration safety, touch/safe-area, i18n, dark-mode | a FE diff touches components/pages and the tag sweep needs the full interface bar |
+| ../konseputo-frontend/references/interface-audit.md | 55 checkable interface rules beyond the mechanical greps: a11y structure, hydration safety, touch/safe-area, i18n, dark-mode | a FE diff touches components/pages and the tag sweep needs the full interface bar |
 
 ## Boundaries
 

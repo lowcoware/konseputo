@@ -37,6 +37,11 @@ reuse → stdlib → platform-primitive → dep). Cheap-to-change → just build
 
 Full rubric, anti-patterns, worked example: `references/panel.md`.
 
+**Fork is specifically "should we rewrite/replace X with [language/tool/
+runtime]"** (not a general architecture fork) → run `references/rewrite-decision.md`
+instead of the generic Diverge/Score above — it's a specialization tuned
+for the hype-vs-nostalgia bias this exact fork shape tends to carry.
+
 ## Hard rules
 
 1. **Three real alternatives or it's not a panel.** One idea dressed three

@@ -19,7 +19,7 @@ footguns, and the specific detection pattern to grep for each.
 | `html/template` not `text/template` for HTML output | `text/template` building HTML, `template.HTML(userInput)` | `text/template`, `template.HTML(` | `html/template` only; never wrap untrusted data in a "trusted" template type |
 | No SSTI | `template.New(...).Parse(r.FormValue(...))` | `.Parse(` traced to request-controlled input | never parse a template built from untrusted input; sandbox aggressively if genuinely required |
 | Path traversal blocked | `http.ServeFile(w, r, r.URL.Query().Get("path"))`, `http.FileServer(http.Dir("."))` on project root | `ServeFile(`, `FileServer(`, `os.Open(filepath.Join(` | allowlist file IDs mapped server-side; enforce base-dir containment after `filepath.Clean` |
-| SSRF blocked on outbound fetch | `http.Get(r.URL.Query().Get("url"))` | `http.Get(`, `client.Do(` with request-derived URL | allowlist hosts, block private/link-local/metadata IP ranges, restrict scheme to http/https, cap redirects |
+| SSRF blocked on outbound fetch | `http.Get(r.URL.Query().Get("url"))` | `http.Get(`, `client.Do(` with request-derived URL | allowlist hosts, block private/link-local/metadata IP ranges, restrict scheme to http/https, cap redirects. **DNS-rebinding gap**: allowlist-then-fetch as two separate steps (resolve to check, then let the HTTP client re-resolve on the real request) lets a malicious DNS answer flip between the check and the fetch — first resolution returns a public IP, second returns `169.254.169.254`. Resolve once, fetch by the resolved IP directly with the original Host header preserved, so a second DNS lookup can't happen at all |
 | Outbound client has timeout + closes body | `http.DefaultClient`/`http.Get` with no timeout, missing `defer resp.Body.Close()` | `http.Get(`, `client := &http.Client{}` no `Timeout` | configured client timeout, `defer resp.Body.Close()` immediately after error check, `io.LimitReader` on untrusted response bodies |
 | Open redirect blocked | `http.Redirect(w, r, r.URL.Query().Get("next"), ...)` unvalidated | `http.Redirect(` with request-derived location | allowlist internal paths, reject absolute URLs unless explicitly allowlisted |
 | Crypto-grade randomness | `math/rand` for session/token/nonce generation | `math/rand`, `rand.Seed` near auth/session code | `crypto/rand` for anything security-sensitive, never `math/rand` |
@@ -39,6 +39,74 @@ footguns, and the specific detection pattern to grep for each.
 | Host header validated | no `TrustedHostMiddleware`, app trusts `Host` header for URL generation | absence of trusted-host middleware | `TrustedHostMiddleware` or equivalent allowlist in production |
 | WebSocket endpoints authenticated | `@app.websocket(...)` accepts and processes messages with no auth check | `@app.websocket`/`websocket_endpoint` with no auth before sensitive operations | require auth during handshake, validate `Origin` for browser clients, rate-limit connections/messages |
 | Request/multipart size bounded | no request or multipart size limit at app or edge | absent size-limit config | enforce at both edge (proxy) and app layer — DoS via memory/CPU exhaustion is a documented Starlette/python-multipart advisory class |
+
+## Cross-framework: GraphQL-specific hardening
+
+A REST-shaped security checklist misses failure modes specific to a
+single flexible query endpoint:
+
+- **Introspection disabled in production** (or gated to operator-only
+  access) — leaving it on hands an attacker the full schema for free.
+- **Query depth limit (~10) AND cost/complexity analysis, both** — depth
+  alone doesn't stop a shallow-but-wide query (many expensive fields at
+  one level) from being just as costly as a deep one. This is distinct
+  from `rate-limit.md`'s alias/batching-abuse coverage, which addresses
+  request-COUNT evasion via aliasing — this is about a single request's
+  query SHAPE being unboundedly expensive.
+- **Field-level authorization, not just endpoint-level.** GraphQL's BOLA
+  equivalent happens per-field: a resolver for `User.email` being public
+  doesn't mean the sibling resolver for `User.phone` inherits that
+  same access — each field needs its own authz check, since a single
+  query can request many fields with different sensitivity in one call.
+- **Persisted queries (APQ) allowlisting for first-party clients**, with
+  arbitrary ad-hoc queries reserved for trusted partners only — an
+  open GraphQL endpoint accepting any query shape from any caller has a
+  much larger attack surface than one that only executes pre-registered
+  query hashes.
+
+## Cross-framework: ReDoS (regex catastrophic backtracking, CWE-1333)
+
+A regex with nested quantifiers or overlapping alternation
+(`^([a-zA-Z0-9]+)*@`, `^(a+)+$`, `^(.*a){10}`) hangs on adversarial input
+via catastrophic backtracking — a DoS vector, not just a performance
+nit, whenever the pattern runs against user-controlled input (email
+validation, username rules, any "validate this string" regex on a
+request path). Python (`re`), JS (native regex), and most PCRE-family
+engines are vulnerable; **Go's `regexp` (RE2) is immune by design** — RE2
+guarantees linear-time matching and structurally cannot backtrack, so
+this specific rule doesn't apply to Go code, only Python/FastAPI paths
+and any regex touching request-controlled input. Fixes for the
+vulnerable engines: possessive quantifiers/atomic groups (the `regex`
+library, not stdlib `re`), an explicit timeout wrapped around the match
+call, or — cheapest and most portable — bound the input length before it
+ever reaches the regex.
+
+## Cross-framework: required negative-path tests for any auth-guarded endpoint
+
+"Test the error cases" without an enumerated list is exactly the kind of
+vague guidance that lets a real gap (algorithm-confusion attacks,
+revoked-user-still-accepted) get silently skipped. Every JWT/auth-guarded
+endpoint gets a dedicated negative test for each of: missing token,
+malformed token, invalid signature, wrong algorithm (the classic
+`alg: none` / RS256-to-HS256 confusion attack), expired token, disabled
+or revoked user, missing role/scope, and insufficient-permission access
+to a resource the caller doesn't own. Missing even one of these from a
+new auth-guarded endpoint's test suite is a review finding, not an
+acceptable gap to "add later."
+
+## Cross-framework: ID enumeration and the decrypt oracle
+
+Applies regardless of Go/FastAPI/anything else — never return a real
+sequential/plaintext primary key in an API response; a monotonic ID
+exposes the internal ID space to enumeration (scrape every order, guess
+every user). Encrypt or otherwise opaque-ify IDs at the response
+boundary. The paired trap: when a client-supplied encrypted/opaque ID
+fails to decrypt, respond with the exact same generic "not found" used
+for a valid-but-missing ID — never a distinguishable error (a different
+status code, a "malformed ID" message, a stack trace). A response that
+tells the difference between "well-formed but missing" and "couldn't
+decrypt" turns the encryption layer into an oracle an attacker can batch-
+probe to learn about the ID space it was supposed to hide.
 
 ## Sources
 

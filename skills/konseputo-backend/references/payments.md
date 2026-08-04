@@ -48,6 +48,21 @@ RU-specific providers (T-Bank/Sber/СБП, Platega/WATA/Lava и др., 54-ФЗ):
 3. Amount + currency code travel together across every boundary — bare int
    invites cross-currency arithmetic.
 
+## Business-logic abuse — distinct from input-trust
+
+The "never trust a client-sent price/plan" rule elsewhere in this file is
+about input TRUST; this is about state ABUSE via a sequence of
+individually legitimate-looking actions. Check for, at minimum: negative
+amounts accepted anywhere in a discount/refund path, unbounded
+coupon/discount stacking (no cap on how many promo codes apply to one
+order), restarting an already-consumed free trial (a new trial keyed off
+something the user controls — a new email, a re-signup — instead of an
+identity that survives account deletion/recreation), self-referral loops
+(referring an account the same person controls), and coupon reuse across
+multiple accounts controlled by the same actor. None of these look like
+an attack in a request log — each individual action is a normal API
+call — the abuse is only visible in the sequence/aggregate.
+
 ## Ledger, not status column
 
 1. Append-only payment events; mutable `status` on the order row is a

@@ -40,3 +40,13 @@ split konseputo-md-generator has with konseputo-project-management for Markdown.
    opened as a standalone artifact (shared as a file, rendered in a
    browser, pasted into a PR, dropped in a channel) — a different delivery
    shape, not a better one.
+5. **The reverse path: when the artifact's content needs to go BACK into a
+   conversation.** If the artifact represents agent output the user is
+   likely to hand back somewhere else (a plan, a review, a decision they'll
+   paste into a PR description or another chat) — not diagram/dashboard
+   genres, where there's no equivalent text form — embed a `Copy Markdown`
+   button alongside a concise Markdown-formatted payload (title,
+   conclusions, rationale, open questions, next actions) distinct from the
+   full HTML. This is a required handoff affordance for the plan/general
+   genres carrying decision content, not an optional nicety — the artifact
+   is often not the final destination, just the readable rendering of it.

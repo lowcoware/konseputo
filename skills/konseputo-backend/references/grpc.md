@@ -31,6 +31,14 @@ layout, codegen, interceptors, and the REST-vs-gRPC decision.
    Use `go-grpc-middleware/v2`, not hand-rolled — the recovery interceptor
    is the process-level version of `hardening-go.md`'s "a spawned
    goroutine's panic isn't caught by the handler's recover" note.
+5. **One domain-error-to-gRPC mapping, not ad hoc per handler.** A single
+   `AppError` type (or equivalent) that every handler returns through,
+   converted at one place into a gRPC `status.Status` plus a machine-
+   readable `x-error-code` (or `google.rpc.ErrorInfo` metadata) — the
+   status code tells the CLIENT how to react generically (retry? not
+   found?), the error code tells calling code which SPECIFIC domain error
+   this was, without every handler hand-picking a status code and string
+   message independently and drifting inconsistent over time.
 
 Sources: [buf: migrate from protoc](https://buf.build/docs/migration-guides/migrate-from-protoc/) ·
 [go-grpc-middleware](https://github.com/grpc-ecosystem/go-grpc-middleware) ·

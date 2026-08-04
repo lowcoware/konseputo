@@ -96,3 +96,63 @@ worker/queue (Redis Streams — the blessed lightweight-queue primitive,
 5. Platform depth beyond aiogram — Mini App initData auth, webhook
    secret_token, broadcast pacing, token leakage, media limits:
    `telegram.md`. Stars payments: `payments.md`.
+
+## Error handling and transaction boundaries
+
+1. **Domain exceptions carry their own HTTP status, one global handler
+   maps them.** A `DomainError` base class with a `status_code` class
+   attribute (`UserNotFoundError.status_code = 404`); a single global
+   exception handler reads `exc.status_code` off whatever domain
+   exception was raised. Routes never catch or re-map domain errors
+   themselves — the mapping lives in exactly one place, not scattered
+   across every route that might raise. **Don't reach for a full
+   Clean-Architecture layered rewrite to get this** — `layout.md`'s flat
+   `routers/services/repositories` shape is the intentional stance; this
+   pattern fits inside it without an onion-architecture/repository-ABC
+   tree.
+2. **Commit inside the session dependency, not in every service/repo.**
+   `commit()` happens once, in the `async def get_session()` dependency's
+   generator, after `yield` — reached only if no exception propagated out
+   of the request. Services and repositories never call
+   `commit`/`flush`/`rollback` directly; the transaction boundary is the
+   request, and the dependency is where that boundary lives. Go's
+   equivalent is in `hardening-go.md`'s transaction-boundaries section —
+   this is the same idea, Python-shaped.
+
+## Correlation-ID propagation — the Python mechanism
+
+`observability.md` requires correlation-ID propagation as baseline; this
+is the concrete Python mechanism, via `contextvars`:
+
+1. **Set it in `@app.middleware("http")`, not a class-based
+   `BaseHTTPMiddleware`.** The class-based approach can swallow exceptions
+   and interferes with streaming responses — the function-decorator form
+   doesn't have either problem.
+2. **Context does NOT auto-propagate across `run_in_executor` or spawned-
+   task boundaries.** A correlation ID set in the request context goes
+   silently missing the moment work crosses into `loop.run_in_executor`
+   or a separately-spawned task — exactly the async-fan-out case where
+   tracing it matters most. Carry it explicitly:
+   `ctx = contextvars.copy_context(); ctx.run(the_task_fn)` (or the
+   executor-equivalent) rather than assuming ambient propagation.
+
+## FastAPI `BackgroundTasks` — misuse boundary
+
+`jobs.md` covers Redis Streams/cron for real queue/schedule work;
+`BackgroundTasks` is FastAPI's own in-process primitive, commonly reached
+for first, with a real misuse boundary:
+
+1. **Never for long-running, critical, must-retry, or must-be-durable
+   work** — a `BackgroundTasks` callback that dies with the worker
+   process (deploy, crash, restart) has no retry and no record it ever
+   ran. That's what `jobs.md`'s real queue is for.
+2. **Never pass `Request`, a DB session, or an ORM object into the task**
+   — pass IDs; let the task open its own session. The request-scoped
+   session is gone by the time the background task actually executes.
+3. **Persist domain state BEFORE triggering the task, not after** — the
+   task should follow up on already-committed state, never be the thing
+   that makes the state real.
+
+Legitimate use: best-effort follow-ups where losing the occasional one is
+acceptable (send a non-critical notification, invalidate a cache key,
+fire a webhook the caller doesn't need to wait for).

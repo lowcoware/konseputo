@@ -93,10 +93,14 @@ Output pattern after shipping code: `[code] → skipped: [X], add when [Y].`
 | File | Covers | Load when |
 |---|---|---|
 | references/ladder.md | full ladder, carve-outs, ceiling markers, output pattern | any skip/simplify decision |
+| references/capacity-estimation.md | back-of-the-envelope QPS/storage/server sizing, reference throughput numbers | a component choice is genuinely uncertain at the brief's traffic level, or a scaling claim needs to be checkable |
+| references/performance-triage.md | making an already-slow path fast: cold/warm measurement, fix-strategy ladder, regression-guard-that-can-fail | a specific endpoint/page/job is known-slow and needs fixing, not sizing or incident diagnosis |
 | references/baseline.md | day-one whitelist, config validation, shutdown, timeouts, retries | service bring-up, scaffolding, network calls |
+| references/pre-code-gate.md | constraint-discovery sequence (assumption ledger, invariants, risk register) before writing code | task touches money/state/concurrency/multi-service/PII — before design, not after |
 | references/events.md | Kafka, outbox, DLQ, idempotency, event naming, rebalancing, schema compatibility, EOS scope, consumer lag | producing or consuming events |
 | references/hardening-go.md | Go production traps: context/panic/worker-pool-sizing/DB-pool/migrations/gRPC/logging, each with a real incident | Go concurrency-heavy code, DB pool config, migrations, gRPC chains |
 | references/hardening-python.md | Python production traps: async-blocking/Pydantic v2/asyncio tasks/GIL/aiogram v3, each with a real incident | async FastAPI code, Pydantic models, asyncio background tasks, Telegram bot services |
+| references/hardening-rust.md | Rust production traps: ownership, error handling, memory, unsafe-code discipline, async/await, concurrency, numeric safety | writing/reviewing Rust service code, anything touching `unsafe` |
 | references/security-checklist.md | HTTP-server hardening + framework-idiom security footguns (Go net/http, FastAPI): timeouts, SSRF/SSTI/path-traversal, mass assignment, excessive data exposure, pprof exposure — each with detection grep | writing a new HTTP handler, outbound fetch, or file-serving endpoint |
 | references/boundaries.md | data ownership, anti-nanoservice, modular-monolith fallback | drawing or questioning service boundaries |
 | references/testing.md | coverage gate, contract tests, E2E, testcontainers, determinism, unit-test craft, mutation testing | writing or reviewing tests |
@@ -106,6 +110,7 @@ Output pattern after shipping code: `[code] → skipped: [X], add when [Y].`
 | references/stores-clickhouse.md | which-store decision + arch-decay/AI-bug patterns: telemetry, aggregates, heatmaps | touching ClickHouse |
 | references/stores-neo4j.md | graph store: routing, trust graphs, APOC/GDS, Cypher footguns | touching Neo4j |
 | references/stores-mongodb.md | document store: schema validation, `$lookup`, 16MB limit, injection | touching MongoDB |
+| references/stores-postgres.md | plain Postgres: anti-pattern table, table-type classification, `pg_stats`-informed query construction, schema-level access-control option | writing/reviewing non-trivial SQL against Postgres as the primary store |
 | references/stores-postgis.md | geo: SRID/geography, GiST index, `ST_DWithin` sargability | touching PostGIS/geo columns |
 | references/stores-minio.md | object storage: presigned URLs, multipart, bucket IAM, upload validation | touching MinIO/object storage |
 | references/stores-redis.md | Redis data-structure selection, key naming, pool-vs-multiplex, blocking-command bans (KEYS/SMEMBERS/HGETALL), client-side caching | touching Redis beyond a cache-aside read/write |
@@ -114,6 +119,7 @@ Output pattern after shipping code: `[code] → skipped: [X], add when [Y].`
 | references/scraping.md | TLS fingerprinting, headless-browser leaks, proxy pools, rate-limit discipline, silent-failure bugs | building a scraper/parser or anti-bot infra |
 | references/realtime.md | WS lifecycle/backpressure/reconnect, horizontal fan-out (Redis PubSub), SSE proxy-buffering trap, ALL streaming (LLM tokens, STT) | any WebSocket/SSE/streaming endpoint |
 | references/jobs.md | background jobs: idempotent handlers, cron-lock (SET NX), cmd/worker split, retry/backoff | scheduled or async background work |
+| references/temporal.md | durable workflow orchestration (Go SDK): determinism rules, Activity non-negotiables, Saga/compensation | a multi-step process needs to survive crashes/deploys/hours-long waits with exactly-once step semantics — jobs.md's queue/cron shape isn't enough |
 | references/grpc.md | buf, package versioning, interceptor chain, REST-vs-gRPC decision | building or wiring a gRPC service |
 | references/caching.md | cache-aside, TTL+jitter, stale-after-write double-delete, stampede | adding a cache layer |
 | references/payments.md | webhook trust boundary, idempotency keys, int64 money, ledger, Telegram Stars, YooKassa/CryptoBot | any payment/money flow |

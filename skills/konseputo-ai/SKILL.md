@@ -32,7 +32,9 @@ harness, embedding-model versioning (the "compare vectors across model
 versions" trap), Qdrant collection/index/HNSW hardening, and vector-DB
 decay patterns that compound over months (orphaned vectors, no TTL, drift
 with no alert) — parallel to `konseputo-review`'s `arch:` tag philosophy for
-regular services. Detail: `references/rag.md`, `references/qdrant.md`.
+regular services. Detail: `references/rag.md`, `references/qdrant.md`. For
+a corpus small enough that a dedicated vector DB is the overengineered
+choice: `references/pgvector.md`.
 
 ## LLM gateway
 
@@ -70,6 +72,7 @@ addendum (RAG-subagent citation discipline, MCP-tool-scoped subagents).
 |---|---|---|
 | references/rag.md | chunking, retrieval eval, contextual retrieval, embedding versioning/caching, code-level AI bugs (normalization, blocking calls, rate-limit backoff) | building or reviewing a RAG pipeline |
 | references/qdrant.md | collection design, multitenancy, payload indexing, HNSW tuning order, memory/quantization, embedding-model migration, snapshots, decay patterns | any Qdrant-touching diff |
+| references/pgvector.md | vector search inside Postgres (halfvec, HNSW config, filtered-search strategy, binary quantization) — the pre-Qdrant ladder rung | corpus small enough a dedicated vector DB isn't earned yet, or the project already runs Postgres |
 | references/llm-gateway.md | provider fallback/circuit-breaker, prompt-injection isolation, output validation, OpenAI-compat-shim caveat | building the Claude/OpenAI-compatible gateway |
 | references/mcp-server.md | tool design, granularity, naming, error classification, context budget, response-shape/pagination conventions, spec version history | building an MCP server or tool |
 | references/mcp-security.md | trust boundaries, tool poisoning, OAuth 2.1, real CVEs, cost/loop-runaway guardrails | any MCP server (tool poisoning applies even to stdio/localhost), any exposed server, any agentic loop with spend risk |

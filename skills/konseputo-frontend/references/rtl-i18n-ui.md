@@ -108,6 +108,9 @@ Safari 14.1, Firefox 66) — no fallback needed.
     already; the reason differs.)
 18. No Lorem Ipsum for RTL prototyping — Arabic word lengths, joins, and
     vertical extents differ; use real Arabic/Hebrew text.
+19. Japanese/CJK content: Latin metrics (`ch`-based measure, ~1.5 line-height,
+    italic emphasis) don't transfer any better than they do to Arabic —
+    concrete ruleset (horizontal and vertical `writing-mode`): `typography-cjk.md`.
 
 ## 6. Forms in RTL
 

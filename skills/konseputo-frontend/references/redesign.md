@@ -35,6 +35,14 @@ Document the current state before proposing anything:
 7. SEO baseline — ranking pages, meta titles, structured data, OG cards.
    **SEO regression is the #1 redesign risk** — never silent.
 
+**After the redesign ships, the comparison itself needs structure, not a
+flat list of differences.** Categorize every visual/behavioral change
+three ways — regression (worse than before, needs a fix), improvement
+(the intended win), neutral (changed but no better/worse) — rather than
+reporting "N differences found." A flat diff makes the user re-derive
+which changes were the point and which are accidental fallout; the
+three-way split does that work up front.
+
 ## 3. Preservation rules
 
 1. Don't change information architecture unless asked — slugs, anchor IDs,

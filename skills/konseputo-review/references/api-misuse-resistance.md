@@ -39,6 +39,31 @@ the one they get to only by reading docs carefully.
    (`permissions = "read,write"` then `+= ",admin"`) invite string-building
    privilege escalation. Prefer an enum/set.
 
+## Type quality beyond security — four axes for any new domain type
+
+Shape 3 above covers security-relevant primitive-vs-semantic swaps
+specifically. The general design principle behind it — "types should
+make illegal states unrepresentable" — applies to any new type a diff
+introduces, not just security-sensitive ones. When a diff adds a new
+domain type, rate it on four axes rather than a binary "is this typed or
+not":
+
+1. **Encapsulation** — can a caller construct or mutate the type into an
+   inconsistent internal state from outside its own package/module?
+2. **Invariant expression** — are the type's invariants stated anywhere
+   (a comment, a validating constructor), or only implicit in how
+   callers happen to use it correctly today?
+3. **Invariant usefulness** — do the expressed invariants actually rule
+   out real bugs, or are they decorative (a validation that always
+   passes because the type is only ever constructed one way in practice)?
+4. **Invariant enforcement** — are invariants checked at construction
+   (fail fast, at the boundary) or discovered later at use (a bug
+   surfaces far from its actual cause)?
+
+A new type that's low on all four is a `struct`/`class` wearing a type
+name — flag it the same way a stringly-typed permission set gets flagged
+in shape 6, generalized beyond the security case.
+
 ## Rationalizations to reject
 
 | Rationalization | Why it's wrong |

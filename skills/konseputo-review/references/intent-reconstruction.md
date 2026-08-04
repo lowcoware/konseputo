@@ -48,3 +48,25 @@ set. (Adaptive-depth framing re-expressed from trailofbits/skills
 (does it do what was asked). Code can pass every standard and implement
 the wrong thing; report the axes separately so a clean tag sweep can't
 mask a spec fail.
+
+**The spec axis needs its own dedicated pass when a ticket/spec has
+explicit acceptance criteria**, not just a general "does this match
+intent" read — compare the diff against each stated AC individually and
+report which ones the diff does NOT satisfy. "This code is correct but
+doesn't do what was asked" is a different failure shape than a bug: the
+code can be internally consistent, well-tested, and still miss an AC the
+spec named. Folding this into general correctness review risks it getting
+lost among line-level findings; a dedicated per-AC pass doesn't let it
+hide.
+
+## Vendored/generated code doesn't get the same scrutiny
+
+A diff that's mostly a bulk commit of vendored or generated code (a
+`vendor/`, `thirdparty/`, `node_modules/`-shaped addition, or a
+regenerated lockfile/codegen output) reads as an unreviewably huge diff
+by every size/complexity heuristic above — but committing it in bulk is
+the intent, not a defect. Recognize the shape (an explicit vendored-path
+allowlist, if the project has consistent locations for this) and suppress
+normal diff-hygiene findings inside it entirely, rather than either
+reviewing it line-by-line (wasted effort, nothing to find) or flagging
+its size as a problem (it isn't one).

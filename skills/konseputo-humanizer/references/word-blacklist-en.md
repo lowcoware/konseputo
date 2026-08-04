@@ -235,6 +235,41 @@ AI-сигнатура в деловых местах: удалить полно�
 | The journey of X has been remarkable | X did Y. Then Z.                |
 | X serves as a testament to Y         | X shows Y.                      |
 
+## 6. Math/code notation as prose shorthand — hard ban
+
+`= → ← ⇒ > < ≥ ≤ ≠ ≈ ± + vs &` used as sentence-level shorthand ("Speed >
+perfection", "A = B", "juniors vs seniors") is a distinct, mechanically
+detectable tell — not covered by the word lists above at all. Replace:
+`→` → "leads to"; `=` → "is"; `vs` → "compared to"; `&` → "and". A hard
+ban, not a density threshold — a single instance in prose (outside actual
+code/math contexts) is worth fixing.
+
+## 7. Chatbot copy-paste artifacts and forensic tells
+
+A distinct, mechanical evidence class — near-zero false positives, unlike
+everything above which needs density to mean anything. Full catalog:
+`chatbot-copypaste-artifacts.md` (citation-leak strings, UTM parameters,
+placeholder residue, invisible Unicode). Two more forensic tells worth
+checking directly: **paragraph-reshuffling immunity** — can paragraph 2
+and paragraph 4 swap positions without breaking the piece? If yes, it
+reads as AI (LLMs generate parallel self-contained blocks rather than an
+unfolding argument with real dependency between paragraphs); **the
+treadmill effect** — a long section restating one idea in different words
+("The system is fast. In other words, it performs well. Put simply,
+speed is a strength.") — a paragraph that doesn't actually advance,
+distinct from ordinary filler because each sentence is individually fine.
+
+## 8. The RLHF "helpful assistant" register — the frame around all of this
+
+Full detail and research citations: `llm-fingerprints.md`. Short version:
+what detectors actually flag isn't "AI-ness" abstractly — it's the
+RLHF-trained helpful-assistant register specifically. Watch for: "Here's
+how I'd think about it..." framing, unrequested-option enumeration,
+pedagogical over-explanation of terms the reader already knows, a caveat
+appended to a claim that didn't need one, acknowledgment-prefixes ("that's
+a great question, and..."), a closing paragraph that recaps what was just
+said.
+
 ## Финальное правило
 
 Ни один список не покрывает всех случаев. Проверка: **прочитай вслух.**

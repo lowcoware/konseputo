@@ -19,6 +19,19 @@ Choosing Frappe UI is a real decision, not a default: state it in the
 Design Read ("register: product, lane: frappe-ui — internal tool, speed
 over taste") so it's not silently skipping the ruleset below.
 
+**Charting escape hatch.** ECharts (either lane) covers standard chart
+types — bar/line/pie/scatter/heatmap. Reach for D3 instead, in either lane,
+only when the need is a genuinely bespoke visual encoding ECharts has no
+preset for: force-directed/network graphs, chord diagrams, custom
+geographic projections, or hand-choreographed transitions tied to
+scroll/interaction state. D3 binds data to the DOM directly — it isn't a
+"chart library" with preset types, it's a toolkit for building one, so
+don't reach for it just because it's more customizable in the abstract;
+that's ECharts with extra steps and a much larger surface to get wrong.
+Package: `d3` (tree-shakeable — import only the modules used: `d3-scale`,
+`d3-shape`, `d3-force`, etc., not the `d3` umbrella package for anything
+beyond a prototype).
+
 ### 0a. Design-system honesty
 
 Brief reads as a KNOWN official design system → use the official package,
@@ -118,6 +131,7 @@ Full pass in hardcore. In blitz/medium, spot-check 3: RTL, empty state, one API 
 | flex/grid children | `min-width: 0` on every shrinkable child |
 | dates / numbers / plurals | `Intl.*` APIs; hand-formatting = 0 |
 | concurrent actions | submit clicked 10x fast = one request |
+| untrusted input reaching CSS | zero: a user-controlled string interpolated into `style="..."`, a dynamic class name built from user data, or a value written into a CSS custom property from unsanitized input. Style values from data (a brand color, a user-set accent) go through an allowlist/validation, not straight interpolation |
 
 ## 6. A11y numbers
 
@@ -162,3 +176,46 @@ standing.
 3. `provide`/`inject` for state a deep, unknown-depth subtree needs (theme, form context) — never as a props-drilling shortcut for 1-2 levels. Cost: consumers become untestable without a wrapping provider in every test — budget that before choosing it over Pinia (`pinia.md`).
 4. `v-model` via `defineModel()` (3.4+), not manual `modelValue` prop + `update:modelValue` emit boilerplate.
 5. Composable-extraction criteria and the lifecycle-sync rule live in `composables.md` — a component that's grown three unrelated concerns is usually three composables, not one bigger component.
+
+## 8a. Filter interactions
+
+Toggling a filter dims non-matching items (`opacity` down, e.g. `.35`)
+rather than removing them from the DOM/layout. Removing filtered-out items
+outright collapses the layout and destroys the user's spatial memory of
+where things were — dimming preserves position while still making the
+match/no-match state obvious at a glance. Reserve actual removal for when
+the filtered set is what gets acted on next (a search that narrows a list
+before a bulk action), not for exploratory filtering.
+
+## 9. Dense operational UI (dispatch/warehouse/logistics-class tools)
+
+registers.md's product-register DENSITY dial covers most product UI; these
+four are specific to a tool trained specialists run for hours a day (a
+dispatch board, a warehouse queue, a scheduling console) — genuinely
+different from an occasional-use admin panel, not just "high density":
+
+1. **Per-row action controls stay visible, never hover-only.** An expert
+   scanning 40 rows doesn't hunt with the mouse to find which rows have
+   actions — a hover-revealed action column means the row's actual state
+   (has an action? which one?) is invisible until the pointer happens to
+   land there. Keep the control (checkbox, toggle, icon button) rendered
+   at all times; hover styling can highlight it, but presence isn't
+   contingent on it.
+2. **Workflow-state filters and search are two different controls, not
+   one filter bar.** A persistent filter ("today's orders, unassigned")
+   represents a scope decision and stays visible/sticky across the
+   session; a search input finds one specific item inside that scope and
+   is expected to clear quickly. Merging them into a single filter UI
+   forces the operator to context-switch between "what scope am I in"
+   and "where's that one row" using the same control.
+3. **Bulk-action feedback scales with the affected count**, not a single
+   fixed pattern: under ~10 items, inline confirmation is enough; 10-100
+   gets a toast with the count ("42 orders updated"); 100+ gets a progress
+   indicator during the operation and a completion summary after. A
+   silent bulk operation (no feedback regardless of count) is always a
+   finding — the operator needs confirmation the action actually landed.
+4. **Hierarchical data (order→lines, route→stops) is an in-place
+   accordion, not a drill-down to a separate page/route** — the operator
+   needs to compare sibling rows' status without losing place. Keyboard
+   expand/collapse (arrow keys, Space/Enter) matters more here than in a
+   consumer list, since these users work keyboard-first for throughput.

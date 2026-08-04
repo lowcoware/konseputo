@@ -26,9 +26,29 @@ is the failure this prevents — extend it, don't duplicate.
    correctness-sensitive; TTL is a backstop, not a strategy.
 5. **Cache expensive/hot reads only** — caching a cheap or low-reuse query
    adds a failure mode for zero win.
+5a. **Immutable/finalized data is a distinct trigger from "hot," and the
+    fix isn't a cache — it's compute-once-and-persist.** Data belonging to
+    a genuinely closed record (a completed order, a closed reporting
+    period) that still gets recalculated from source tables on every read
+    is the easiest class of waste to miss, because the code stays
+    correct — it's not producing wrong answers, just repeating work on
+    data that provably won't change again. Recognize by the trigger
+    condition (this record can never be updated again), not by request
+    volume — a rarely-read closed record still doesn't need recomputing
+    on the read that finally happens.
 6. **Key includes a version segment** (`user:v2:123`) — same rule as
    `konseputo-ai/references/rag.md`'s embedding cache-key; an unversioned key silently
    serves old-shape data after a logic change.
+7. **Where the caching lives (Go, but the shape generalizes): a decorator
+   behind the same repository interface, not caching calls scattered
+   through business logic.** A `RepoRedis` type implements the exact same
+   Repository interface as the real Postgres-backed repo — checks Redis
+   first, falls through to Postgres on miss — and the use-case/business
+   logic layer only ever depends on the Repository interface, with zero
+   awareness a cache exists underneath it. Keeps cache-aside logic in one
+   place instead of duplicated at every call site, and the interface stays
+   swappable (test doubles, a future different cache, or no cache at all
+   for a code path that shouldn't have one).
 
 Sources: [Redis: taming the thundering herd](https://redis.io/blog/how-to-tame-the-thundering-herd-problem/) ·
 [Habr: cache invalidation as a consistency problem](https://habr.com/ru/companies/otus/articles/1033194/) ·

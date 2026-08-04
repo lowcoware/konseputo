@@ -59,6 +59,23 @@ Applies to every platform.
    own visibility-reduction threshold, not at it.
    [Android Developers: Android vitals crash/ANR thresholds](https://developer.android.com/topic/performance/vitals/crash)
 
+7. **Motion — spring params over duration+easing.** Parameterize by
+   `(duration, bounce)` rather than raw stiffness/damping — the same two
+   knobs drive SwiftUI's `.spring(duration:bounce:)`, Motion (web), and CSS
+   `linear()` output, so one design decision ports across platforms.
+   `stiffness = (2π/duration)²`, `damping = 4π(1-bounce)/duration` (corrects
+   a formula that's circulated garbled from a WWDC23 transcript). Gesture
+   rules that hold everywhere: 1:1 finger/drag response during the gesture,
+   trigger the animation by its consequence not by a fixed delay, carry
+   velocity into the release animation (don't zero it), keep the animation
+   interruptible by a new gesture at all times, rubber-band past a hard
+   boundary rather than clamping instantly. **Reduced-motion means calmer,
+   not gone** — cut amplitude/duration, never just delete the animation or
+   swap to an instant cut; an app that goes from spring-everywhere to
+   zero-motion under Reduce Motion reads as broken, not accessible.
+   (Distilled from OtherdaysStudio/springy-motion, harvested GitHub skill.)
+
 Sources: [Android Developers WebView security (CC BY 2.5)](https://developer.android.com) ·
 [HackTricks WebView attacks](https://book.hacktricks.wiki) · deep-linking/rollout facts are
-general platform documentation (factual, not licensed expression).
+general platform documentation (factual, not licensed expression) ·
+OtherdaysStudio/springy-motion (harvested GitHub skill).

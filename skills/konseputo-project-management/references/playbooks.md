@@ -53,7 +53,15 @@ Trigger: periodic (weekly by default, adjust per project rhythm).
 ## retrospective
 
 Trigger: end of a work cycle (sprint-as-reporting-period, or a spec
-cluster wrapping up).
+cluster wrapping up) — **always runs, by default, not opt-in.** Skipping
+it requires an explicit stated reason, never a silent default or "nobody
+asked for one." For a genuinely unattended/autonomous cycle with no
+human present to facilitate, still write a minimal record — an empty
+findings list with an explicit `autonomous; no facilitator invoked`
+marker — rather than either skipping the ritual or fabricating rich
+content that wasn't actually observed. Same never-invent discipline
+`conventions.md`'s citation rule already requires, applied to this
+ritual's unattended-run edge case specifically.
 
 1. Gather in parallel: planned vs. actual vs. discovered — three separate
    subagent passes, not one pass trying to remember all three.
@@ -63,6 +71,28 @@ cluster wrapping up).
 3. Action items get IDs and must be traced into the next cycle's plan —
    an action item that isn't picked up next cycle is a retro that didn't
    close the loop, which makes the whole ritual theater.
+4. **A failure that generalizes gets promoted past a one-off action
+   item.** Most retro findings are specific to one cycle and stay as
+   action items. When a finding names a REASONING error, not just an
+   outcome ("the agent assumed the migration was additive without
+   checking" — the causal mistake, not just "the migration broke prod"),
+   and it's the kind of mistake that could recur on unrelated work, write
+   it as a standing negative constraint ("never assume a migration is
+   additive without checking for existing NOT NULL columns") in the
+   project's constitution/conventions doc, not just as an action item
+   that expires once addressed. A negative constraint gets consulted
+   before future proposals, the same way `adr.md`'s governed-code check
+   works — a one-off action item doesn't get re-checked once closed.
+5. Two distinct artifact types come out of a retro, not one blended note:
+   a **narrative handover** (this cycle's session record — append-only,
+   never edited, kept even after superseded, since the reasoning behind a
+   past decision is worth more than just its latest restatement) and a
+   **tagged lesson** (a durable, reusable pattern — "this quirk always
+   bites X," "this tool always needs Y" — searchable and re-affirmable:
+   when a lesson proves true again, note the reaffirmation rather than
+   writing a near-duplicate lesson). Blending them into one note makes
+   the durable pattern hard to find later inside a pile of one-off
+   session summaries.
 
 ## triage-incoming-request
 

@@ -31,7 +31,11 @@ it's konseputo-frontend's job, not this skill's.
    motivated interactivity. `references/pan-zoom.md`.
 6. **Ship as one file.** No build step, no external dependencies beyond
    what the browser ships natively — the whole point is "open this file
-   and it works."
+   and it works." The one narrow exception: `export-toolbar.md`'s
+   pinned+SRI CDN scripts, and only when the user actually wants
+   export-outside-the-chat — never bring in a CDN dependency for anything
+   else (charting libraries included: hand-build the SVG per this skill's
+   own techniques rather than reaching for D3/Chart.js/etc.).
 
 ## What this is not
 
@@ -49,6 +53,8 @@ text, means the wrong genre was picked in step 1.
 | references/palette.md | shared token set extracted from the corpus (colors, type scale, radius, dot/pill/delta component patterns), dark variant | starting any artifact's visual system |
 | references/dark-mode.md | the four mandatory dark-mode pieces + reference implementation | every artifact |
 | references/pan-zoom.md | SVG pan/zoom technique: 1:1 pan, cursor-anchored zoom, click-after-drag suppression | diagram genre |
+| references/animated-connectors.md | flowing dashed connectors, traveling request dots, z-order, SMIL reduced-motion handling | diagram genre, a request/data-flow sequence needs animating |
+| references/export-toolbar.md | copy/PNG/PDF export pattern (html2canvas + jsPDF, pinned + SRI), collapsed toolbar UI | user wants the artifact shareable outside the chat (diagram, dashboard, prototype) |
 | references/handoff.md | where an artifact request comes from (konseputo-pm/review/debt/goal), the content-vs-format contract | the request originates from another konseputo skill's output |
 | references/self-reference.html | self-generated reference artifact — Apple design system (konseputo-frontend/references/design-systems), general+plan+diagram genre techniques in one file, the skill's own output measured against itself, not the vendored gallery | checking whether current output still matches this skill's own baseline; regenerate and diff when the rules above change |
 

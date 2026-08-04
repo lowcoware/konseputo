@@ -34,7 +34,13 @@
    just "feels slow."
 8. God-widget anti-pattern: compose small reusable widgets, not one giant
    `build()`.
-9. **Layer scaffolding is overkill below a certain size.** Data/domain/
+9. **Domain models must not import Flutter SDK or external packages**
+   (codegen annotations like `freezed`/`json_serializable` excepted) — a
+   lint-checkable boundary between `lib/domain` (pure Dart) and `lib/data`
+   (services injected into repositories, never called directly by
+   ViewModels/controllers). Catches the domain layer silently absorbing a
+   framework dependency it shouldn't have.
+10. **Layer scaffolding is overkill below a certain size.** Data/domain/
    presentation package splits earn their keep on a multi-feature app with a
    team behind it — even Very Good Ventures, the pattern's own authors, call
    full layering "a bit overkill" for small projects. Start flat.

@@ -131,6 +131,16 @@ between scales.
     standalone frame: same design system, larger text, more visible
     spacing, calmer composition. That is a cleaner render of the same
     design, not a new design.
+19. **Publication-critical text (a real title, a real price, a real date,
+    a real CTA) never rides on the image model rendering it correctly.**
+    This pipeline is for design REFERENCES the code implements afterward —
+    text in these images is a layout/mood cue, not the delivered copy, so
+    this rarely bites here. It matters if this skill's output is ever a
+    finished visual asset distributed as-is (a generated poster/social
+    card/key visual, not a coded page) — in that case, generate the
+    background/texture/mood freely, then composite the actual text as real
+    editable text/DOM afterward rather than trusting the image model's
+    render of it.
 
 ## 6. Analysis pass — extract before you code
 

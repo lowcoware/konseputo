@@ -1,0 +1,105 @@
+category	bucket	fullName	stars	updatedAt	description
+ios	top-stars	AvdLee/RocketSimApp	787	2026-08-02	RocketSim - 30+ tools for Xcode's iOS Simulator: testing, debugging, network monitoring, AI agent automation via RocketSim CLI
+ios	top-stars	Wholiver/swiftui-design-skill	163	2026-08-01	SwiftUI Front-End Design Skills - six rules against AI sloppiness, brand asset guidelines, five-dimensional review
+ios	top-stars	furkancingoz/aso-skill	34	2026-07-22	Complete App Store Optimization skill for Claude Code - metadata, competitor analysis, App Store Connect submission, screenshots
+ios	top-stars	Nagarjuna2997/ios-agent-skill	31	2026-08-01	Production-ready iOS SwiftUI guidance for AI coding agents
+ios	top-stars	ivan-magda/swift-security-skill	29	2026-07-24	AI agent skill for secure credential storage & cryptography on Apple platforms - Keychain, biometrics, CryptoKit, OWASP
+ios	top-stars	mhaviv/Swift-FocusEngine-Agent-Skill	19	2026-07-31	AI agent skill for correct focus management for tvOS, iOS, macOS, visionOS & watchOS
+ios	top-stars	JustinPerea/app-store-review-skill	9	2026-07-30	Claude Code skill that scans Xcode projects for common App Store rejection reasons before submission
+ios	top-stars	ivan-magda/uikit-expert-skill	7	2026-07-03	Agent skill for writing correct, modern UIKit code in Swift - lifecycle, memory, concurrency, collection views
+ios	top-stars	koshkinvv/ios-agent-skills	5	2026-05-14	9 expert-level iOS development skills - SwiftUI, architecture, networking, data, security, concurrency, testing
+ios	top-stars	zinxj/uikit-expert-skill	4	2026-07-27	AI agent skill for accurate, efficient, modern UIKit Swift code with best practices
+ios	top-stars	markgravity/app-tester-skill	3	2026-06-27	Claude Code skill for testing iOS/macOS app navigation flows without screenshots - screen graph, accessibility tree
+ios	top-stars	beydemirfurkan/appstore-release	3	2026-07-05	Ship an iOS app to App Store review end-to-end via App Store Connect API - agent skill, ~90% automated
+ios	top-stars	zanwei/human-interface-guidelines-skill	2	2026-07-13	Reusable HIG skill for iOS, iPadOS, macOS, watchOS, tvOS, visionOS design review/spec workflows
+ios	top-stars	artbyjazi/app-store-approval	2	2026-08-01	Claude Code skill that audits an iOS codebase for App Store rejection risks before submission
+ios	top-stars	ebuntario/apple-hig	2	2026-04-21	Claude Code skill: build Apple-platform UIs following HIG across SwiftUI, UIKit, AppKit, iOS, macOS, iPadOS, watchOS, tvOS, visionOS
+ios	top-stars	berkayturk/appstore-precheck	2	2026-08-02	Read-only iOS App Store pre-submission check - 20 rejection vectors, fastlane precheck wrapper, adversarial reviewer pass
+ios	noname	marcotini/apple-app-store-aso	1	2026-05-26	Claude Code skill for Apple App Store metadata: drafts it, validates it, won't make it up
+ios	noname	Rylaa/ios-marketing-att-skill	1	2026-05-21	Claude Code skill for iOS marketing channel attribution under ATT - AppsFlyer, Adjust, Meta AEM, SKAdNetwork 4
+ios	noname	OtherdaysStudio/springy-motion	1	2026-06-03	Springy, physically-grounded motion for web and SwiftUI - a Claude Code skill that builds and reviews animations
+ios	noname	moretea-labs/ios-engineering-skill	1	2026-06-27	Open-source AI skill for end-to-end SwiftUI and iOS engineering workflows
+ios	noname	mazen-salah/appstore-localization	1	2026-06-12	Claude Code skill: localize iOS App Store metadata & screenshots into many locales - Gemini + Astro ASO + Python
+ios	noname	martingeidobler/ios-mcp-server	2	2026-07-21	MCP server for iOS Simulator control with native touch injection and native UI tree reading - no Accessibility permissions needed
+ios	noname	alin6668/ios-mcp-lua	1	2026-07-07	iOS MCP server with Lua 5.4 scripting engine - 42 ios.* Lua APIs
+ios	noname	lastlookdev/ios-mcp-server	1	2026-05-17	MCP server for iOS device/simulator control
+ios	noname	atian8179/app-settings-guide	0	2026-05-24	Interactive Claude Code skill for building iOS SwiftUI settings/preferences/about screens
+ios	noname	Trentobobbi/uikit-mastery-playbook	0	2026-08-02	UIKit Expert Skill 2026 - best practices & high performance Swift code
+ios	noname	arnoldalberto007-sys/Swift-UIKit-Components	0	2026-08-02	Swift-UIKit-Pro 2026: build production-ready programmatic iOS apps with advanced architecture & data flow patterns
+ios	noname	Vladimir-Br/swiftui-project-template	0	2026-05-13	Cursor rules starter template for new SwiftUI projects using modern Apple APIs
+ios	noname	aponeurosiswilling807/apple-hig	0	2026-07-27	Apple HIG plugin for iOS, iPadOS, macOS, watchOS, tvOS, visionOS UI design
+ios	noname	anagnole/apple-reviewer-simulator	0	2026-06-03	Claude skill acting as Apple App Review reviewer by driving iOS Simulator with computer use
+ios	noname	AmrMohamad/figma-to-ios-ui	0	2026-04-17	Public Figma-to-iOS design-to-code skills for UIKit, XIB, and SwiftUI
+ios	noname	yoshi2ys/simpilot	0	2026-07-28	CLI tool for controlling apps on Simulator via XCUITest
+ios	noname	bensonmaxai/minis-security-skills	0	2026-04-11	Security skills for Minis on iOS - agent operational safety and prompt-injection defense
+ios	noname	bensonmaxai/minis-coding-success-skills	0	2026-04-11	Coding-success skills for Minis on iOS - review risk, plan, isolate, trace, test, verify, release
+ios	noname	sesamehut/appstore-connect-skill	0	2026-06-22	Portable AI-agent skill/CLI to operate the Apple App Store Connect API - listings, reviews, TestFlight
+ios	noname	ezra-y/ios-motion-patterns-index	0	2026-06-17	Claude Code skill - index of ready-to-run Swift animation code examples, sourced from MotionBook
+ios	noname	CJ10110425/claude-design-to-testflight	0	2026-04-23	Claude Design to TestFlight pipeline (iOS) - bilingual Claude Code skill + guides for Expo + Firebase apps
+ios	noname	ciscoriordan/storescreens-skill	0	2026-07-12	Agent skill that sets up and runs storescreens-cli for App Store screenshot automation
+ios	noname	sosteam65/app-store-connect-skill	0	2026-07-27	Manage iOS app metadata, TestFlight builds, and releases from terminal via Claude Code skill
+ios	noname	heyimjames/nikita-bier-consumer-apps	0	2026-03-11	Claude AI skill packaging Nikita Bier's playbook for building viral consumer iOS/mobile apps
+android	top-stars	minhalvp/android-mcp-server	791	2026-08-02	MCP server that provides control over Android devices via adb
+android	top-stars	aldefy/compose-skill	552	2026-08-02	Jetpack Compose Agent Skill - AI-powered coding guidance with actual androidx/androidx source code receipts
+android	top-stars	dpconde/claude-android-skill	300	2026-07-31	Claude Code skill for building modern Android apps following best practices
+android	top-stars	anhvt52/jetpack-compose-skills	92	2026-07-28	Agent skill for modern Android development with Jetpack Compose - best practices for code generation and review
+android	top-stars	martingeidobler/android-mcp-server	59	2026-08-02	MCP server for controlling Android emulators via ADB - screenshots, UI interaction, logcat, bug documentation
+android	top-stars	haidrrrry/compose-kotlin-agent-skills	34	2026-08-01	Jetpack Compose & Kotlin AI agent skills for Cursor, Claude Code, Codex, Gemini & 27+ agents - strict MVI, Kotlin 2.x K2
+android	top-stars	thecombatwombat/replicant-mcp	17	2026-07-28	Android MCP server - production-grade, token-optimized, accessibility-first
+android	top-stars	jiantao88/android-mcp-server	16	2026-07-11	Android MCP Server implementation
+android	top-stars	hah23255/adb-android-control	11	2026-08-02	Comprehensive Android device control via ADB - typed Python package + CLI + Claude Code skill
+android	top-stars	xnet-admin-1/mcpshell	10	2026-07-22	Android MCP server with sh, proot Ubuntu, and Shizuku rish shell tools
+android	top-stars	alguojian/android-mcp-server	8	2026-07-19	Android MCP server based on MCP Kotlin SDK, using SSE transport protocol
+android	top-stars	us-all/android-mcp-server	7	2026-07-10	Android MCP server - 75 tools for ADB-based device management, UI automation, logcat, emulator control
+android	top-stars	jduartedj/android-mcp-server	6	2026-06-26	MCP server for Android device control via ADB - screenshot, touch, swipe actions
+android	top-stars	RanaNadeemAslam/android-ai-skills	5	2026-05-11	Production-grade Android best practices for AI coding assistants
+android	top-stars	zerotap-app/android-mcp-server	4	2026-07-30	Turn your Android phone into an MCP server - no ADB needed
+android	top-stars	IngaleChinmay04/android-mcp-server	3	2026-07-29	Android MCP server
+android	top-stars	jahonn/figma-android-xml	2	2026-07-01	Claude Code skill: high-fidelity Figma-to-Android XML restoration via Figma MCP, 22 battle-tested pitfalls
+android	top-stars	SoundsguyZA/android-mcp-server	2	2026-06-12	MCP Server for Android - desktop-agent capabilities on mobile, 14 tools for filesystem, shell, system management
+android	top-stars	smutti/mcp_android	2	2026-02-21	Production-Ready Android MCP Server in Python
+android	noname	roninforge/roninforge-kotlin-compose	1	2026-07-31	Cursor plugin for modern Android (Kotlin 2.x + Jetpack Compose + Material 3) - StateFlow, Hilt, Navigation Compose, KSP
+android	noname	wujie272/termux-mcp	1	2026-06-16	Android MCP Server - control your Android phone from AI via Model Context Protocol
+android	noname	shuao-pro/android-mcp	1	2026-07-28	Android MCP Server - device automation via Shizuku + ADB tunnel
+android	noname	jaye773/android-mcp-server	1	2026-07-28	MCP server for controlling Android devices and emulators targeted towards android developers
+android	noname	moallemi/android-mcp-server	1	2026-05-24	Android MCP server - control devices, capture screenshots, interact with UI, manage apps via ADB
+android	noname	alvarose/android-update-deps	0	2026-07-11	Claude skill for safe, gated review & update of Android (Kotlin/Gradle) dependencies in a version catalog
+android	noname	qazmko72/android-mcp-server	0	2026-07-20	Android MCP server
+android	noname	chldu2000/android-mcp-server	0	2026-05-06	MCP server providing ADB capabilities for controlling Android devices, built with FastMCP
+android	noname	KingJem/android-capture-skill	0	2026-07-29	Claude Code skill: automated Android HTTPS packet capture (FlowTrans TUN + mitmweb + Frida)
+android	noname	dineshkumarappdeveloper/play-console-draft	0	2026-06-21	Claude Code skill: take an Android app from source to a submittable Google Play Console draft, fast
+crossplatform	top-stars	HoangNguyen0403/agent-skills-standard	536	2026-07-30	Collection of Agent Skills Standard and Best Practice for programming languages/frameworks incl. mobile stacks
+crossplatform	top-stars	greenstevester/fastlane-skill	32	2026-07-30	AI skill to setup and use fastlane to automate building and releasing your iOS and Android apps
+crossplatform	top-stars	anasfik/FlutterGuard	23	2026-06-02	Flutter APK/AAB security SKILL.md for OpenClaw, Codex, Claude Code, and other AI coding agents
+crossplatform	top-stars	KhalidWar/flutter_cursor_rules	11	2026-01-01	Flutter/Dart coding guidelines for Cursor AI IDE
+crossplatform	top-stars	dkpoulsen/flutter-tools	8	2026-01-23	Flutter MCP server
+crossplatform	top-stars	MoritzMessner/flutter-cursor-rules	4	2026-03-02	Cursor Rules for Flutter MVVM and architecture best practices
+crossplatform	top-stars	ricardocaste/flutter-cursor-rules	3	2026-04-16	Flutter App Expert .cursorrules
+crossplatform	top-stars	app-appplayer/flutter_mcp_server	5	2026-04-09	Flutter MCP server
+crossplatform	top-stars	mahdi-salmanzade/expo56-skill	2	2026-07-25	Expo SDK 56 reference as a Claude Code skill + plugin marketplace - offline, point-in-time snapshot
+crossplatform	top-stars	logesh-kumar/publish-mobile-app	2	2026-06-17	Claude Code skill that automates iOS App Store + Google Play Store publishing for Capacitor, Expo, and Flutter apps
+crossplatform	top-stars	shammarafzal/claude-flutter-mobile-app-development-skill	2	2026-07-21	Community Claude Skill for Flutter mobile app development - Clean Architecture, Firebase, REST APIs, UI, publishing
+crossplatform	top-stars	zero-labsco/flutter-agent-kit	1	2026-07-31	Cross-tool agent kit for Flutter development - AGENTS.md single source of truth, thin entry points for multiple agents
+crossplatform	top-stars	Zulut30/dart-mobile-game-studio	1	2026-07-15	Production-grade AI agent skill for building polished 2D Flutter and Flame games for iOS and Android
+crossplatform	top-stars	almasumdev/awesome-kotlin-multiplatform-agent-skills	1	2026-04-19	Curated agent skills, conventions, workflows for building Kotlin Multiplatform (KMP) apps with AI coding agents
+crossplatform	top-stars	gabriel-tutor/ionic-capacitor-skills	1	2026-03-12	Claude Code Skill for building production-quality Ionic Capacitor mobile apps across React, Angular, Vue
+crossplatform	top-stars	Fredjuel/arc-skill	1	2026-07-30	Architecture guidelines and code templates for AI agents to scaffold and maintain production-ready React Native (Expo) projects
+crossplatform	noname	bioanywhere/mcp-awesome-react-native	0	2026-04-24	Docker deployment for awesome-react-native MCP server
+crossplatform	noname	taimour1446/claude-react-native-builder	0	2026-05-15	Claude Code plugin - AI agent system that scaffolds & extends production-grade React Native (Expo) apps
+crossplatform	noname	cadoCG/mobbin-flutter	0	2026-06-01	Claude Code skill for Flutter UI/UX research and implementation using Mobbin MCP
+crossplatform	noname	alimomin1998/v8v-react-native	0	2026-07-16	V8V React Native MCP server bridge
+crossplatform	noname	NoaTubic/flutter-localization-audit-skill	0	2026-05-06	Flutter/Dart localization audit skill - hardcoded strings, missing ARB keys, RTL issues, broken plural forms
+crossplatform	noname	NoaTubic/flutter-store-readiness-skill	0	2026-05-06	App Store & Google Play submission readiness audit skill - iOS Privacy Manifest, Android Data Safety, permissions
+crossplatform	noname	NoaTubic/owasp-mobile-audit-skill	0	2026-05-06	OWASP Mobile Top 10 (2024) security audit skill for Claude Code - all 10 categories + 6 emerging checks
+crossplatform	noname	NoaTubic/flutter-dependency-audit-skill	0	2026-05-06	Flutter/Dart dependency audit skill - outdated packages, abandoned libs, license conflicts, CVEs
+crossplatform	noname	DumbGreenFish/greenfish-cpm-skill	0	2026-06-08	Claude skill for working with Compose Multiplatform (CMP)
+crossplatform	noname	iskra-ai-tech/riverpod-internals	0	2026-05-22	Claude Code skill: riverpod/flutter_riverpod/hooks_riverpod internals - 43 source-cited findings, 740+ passing tests
+crossplatform	noname	huseyininnc/flame-game-dev	0	2026-06-22	Claude Code skill for building studio-grade 2D games with Flutter Flame - engine + game-design knowledge bases
+crossplatform	noname	kachouri/mobile-hybrid-audit	0	2026-05-27	Claude Code skill: audit & fix web apps for pixel-perfect mobile as PWA, Capacitor (iOS+Android), or hybrid
+crossplatform	noname	JoDaBaRo/agentic-mobile-rules	0	2026-06-19	Shareable Cursor rules for agentic mobile development (Android + iOS) - no IDE required day-to-day
+crossplatform	noname	RubenGlez/mobile-design	0	2026-07-21	Agent skill for professional mobile UI design, implementation, and review (cross-platform)
+crossplatform	noname	dbjpanda/starter-skill	0	2026-06-01	Claude Code plugin: scaffold a Convex full-stack starter incl. Expo SDK 56 native app
+crossplatform	noname	cs32dasdasd/ionik-capacitor-flux-patterns	0	2026-08-02	Ionic Capacitor Pro 2026: AI-powered hybrid app builder for React, Angular & Vue
+crossplatform	noname	InkPalAI/inkpal_npm	0	2026-05-17	InkPal - Flutter MCP server for Claude Code, Cursor, Windsurf, Codex, Copilot
+crossplatform	noname	KevlarTheGreat/flutter-mcp-server	0	2026-05-30	Simple Flutter MCP Server for Claude and other Agentic Workflows - hot restart/reload etc.
+crossplatform	noname	MukalDadhwal/Flutter-Mcp-Server	0	2026-05-31	Flutter MCP server

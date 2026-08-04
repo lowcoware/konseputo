@@ -35,6 +35,35 @@
    effect is a chain to collapse into one handler/render pass (React core
    docs).
 
+7. **`expo-secure-store` default accessibility, and its auth-gate
+   platform asymmetry.** Same footgun class as native.md's raw-Keychain
+   section: the default accessibility level survives-only-when-unlocked,
+   which breaks background reads if you don't set it deliberately.
+   `requireAuthentication: true` behaves differently per platform — Android
+   requires biometric/passcode auth for every operation (read AND write),
+   iOS requires it only for reading or updating an *existing* value, not
+   for creating a new one. It also silently breaks if the same
+   `keychainService` was previously used for non-authenticated writes —
+   requiring auth needs its own dedicated `keychainService`, not a retrofit
+   onto an existing one.
+8. **`expo-crypto`'s AES-GCM API takes base64-encoded strings, not raw
+   bytes** — plaintext, IV, tag, and AAD all must be base64-encoded before
+   the call. Passing raw UTF-8 doesn't error, it silently produces garbage
+   ciphertext — a dangerous silent-failure shape, not a crash you'd catch
+   in testing.
+9. **OAuth: authorization-code+PKCE only** — `ResponseType.Token` (implicit
+   flow) is legacy and carries an access-token-injection risk.
+   `CodeChallengeMethod.Plain` throws at construction; S256 is the only
+   supported method. Expo Go specifically **cannot complete an OAuth
+   redirect** (its scheme is fixed) — this needs a dev build, not just "try
+   it in Expo Go first."
+10. **Expo Router's `Stack.Protected`/route-guard pattern is client-side
+    only** — it is not a substitute for server-side auth. A user who knows
+    the URL can still fetch the underlying HTML/JS during a static export
+    regardless of the guard; the guard controls navigation UX, not access.
+    (Items 7-10 distilled from mahdi-salmanzade/expo56-skill, harvested
+    GitHub skill.)
+
 Sources: [React Native docs (MIT)](https://reactnative.dev) ·
 [Expo docs (MIT)](https://docs.expo.dev) ·
 [pmndrs/zustand (MIT)](https://github.com/pmndrs/zustand) ·

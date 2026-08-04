@@ -10,6 +10,29 @@ context (is this button really a link? does this animation have an origin?).
 Run it on changed components before delivery and during `/konseputo-review`.
 Findings use the terse `file:line` format (bottom of this file).
 
+**Look at it like a human before running the checklist.** A pure
+rule-by-rule pass can spend several rounds confirming contrast ratios and
+viewport heights while a badge visibly overlaps a tab label or a form is
+visibly broken — obvious to a first glance, invisible to a checklist that
+never actually looks at the rendered page as a whole. Before section 1
+below: look at a full render/screenshot and write down what a first-time
+viewer would notice, in plain language, with zero mentions of contrast
+ratios, WCAG criteria, or CSS selectors in this pass — that vocabulary
+belongs to the structured sweep that follows, not this one. Then run the
+numbered rules.
+
+**Root cause over symptom.** When multiple findings trace to the same
+underlying cause, collapse them into ONE finding that fixes the cause —
+"increase max-height" or "add overflow:auto" patching a symptom is itself
+a finding, not an accepted fix. Two mechanical tells worth checking by
+hand every time: (a) an absolutely-positioned element inside a flex/grid
+parent is out of that parent's layout flow and WILL collide with siblings
+— the fix is joining the flow, not raising z-index; (b) a collapsible
+element that still carries a fixed `max-height` in its EXPANDED state
+is backwards (shrinking the umbrella instead of folding it) — the
+expanded state should have no height ceiling, only the collapsed one
+does.
+
 ## 0. Already policed elsewhere — pointer, don't re-derive
 
 | Rule | Lives at |
@@ -55,6 +78,15 @@ Findings use the terse `file:line` format (bottom of this file).
    to main content on page-level layouts.
 8. Anchored headings get `scroll-margin-top` so in-page links don't land
    under a sticky nav.
+8a. **Label in Name (WCAG 2.5.3).** When a control has visible text, its
+    accessible name must contain that visible text verbatim (case-
+    insensitive) as a substring — voice-control users (Voice Control,
+    Dragon) speak the visible label to activate it, and a mismatched
+    `aria-label` breaks that. `aria-label="Delete item from cart"` on a
+    button reading "Delete" passes; `aria-label="Remove"` on the same
+    button fails — the visible word isn't in the accessible name at all.
+    Icon-only buttons with no visible text are exempt (rule 1 already
+    covers them).
 
 ## 2. Focus
 
@@ -142,6 +174,12 @@ CLS.
     immediate and final.
 33. `autofocus` sparingly: desktop only, single primary input per page
     (a login form yes, a filter field no) — on mobile it yanks the keyboard.
+33a. SPA route changes restore scroll deliberately: forward navigation to a
+    new route scrolls to top, back/forward navigation restores the scroll
+    position the user left (`history.scrollRestoration = 'manual'` +
+    save/restore keyed by path, or the router's built-in equivalent).
+    Leaving the browser default on a client-routed app means back-button
+    lands at a random mid-scroll position instead of where the user was.
 
 ## 9. Touch & safe areas
 
@@ -155,6 +193,12 @@ CLS.
     (motion-craft.md §6 owns the gesture math; this is the DOM hygiene).
 38. Full-bleed and fixed-bottom layouts pad with `env(safe-area-inset-*)`
     for notches and home indicators.
+38a. A fixed/sticky bottom bar (mobile CTA bar, cookie banner, cart summary)
+    needs the page's scrollable content to carry bottom padding equal to
+    the bar's rendered height (plus safe-area inset) — otherwise the last
+    section's content or a final CTA sits physically underneath the bar,
+    unreachable and unreadable. Measure the bar's actual height (it varies
+    with content/font-scaling), don't hardcode a guessed pixel value.
 
 ## 10. Dark mode & theming
 

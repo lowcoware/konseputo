@@ -10,6 +10,16 @@ against this suite's own real project history, marked
 
 Backend AI-bug/arch patterns: `ai-bug-patterns-be.md`.
 
+## User-facing changes need visual proof against spec, checked not just present
+
+For any diff changing what a user actually sees, missing screenshot/video
+evidence is a BLOCK, not a downgradeable nit — same weight as a missing
+test on logic. And presence alone isn't enough: evidence that captures
+the wrong surface (a screenshot of the wrong screen/state) or omits a
+required acceptance criterion the spec named fails the check exactly the
+same as no evidence at all. The proof has to be checked AGAINST the
+spec/AC, not merely attached to the PR.
+
 ## FE — `bug:` (functional, not aesthetic)
 
 ### Reactivity

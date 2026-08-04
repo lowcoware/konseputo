@@ -50,7 +50,13 @@ Stop at the first that holds:
 | references/react-native.md | New Arch/Expo choice, FlatList perf, Expo Router, state, bridge/listener leaks | any React Native work |
 | references/native.md | native-vs-cross-platform decision, SwiftUI @Observable state, Kotlin coroutines/Compose, dropping to native | native code or a platform channel |
 | references/cross-cutting.md | secrets-in-binary, deep linking, WebView security, offline-first sync, push, release discipline | any app (all platforms) |
-| references/hardening-mobile.md | the mobile AI-typical bug catalog: leaks, main-thread blocking, list perf, lifecycle | reviewing mobile code |
+| references/hardening-mobile.md | the mobile AI-typical bug catalog: leaks, main-thread blocking, list perf, lifecycle, Keychain/biometric misuse | reviewing mobile code |
+| references/app-store.md | App Store + Play Store rejection causes, submission API gotchas, ASO, ATT/SKAdNetwork/AdAttributionKit attribution, guideline-drift-detection technique | submission prep, store metadata, attribution/ad-SDK wiring |
+| references/android-deps.md | Gradle/version-catalog bump procedure: coupled-version detection, JitPack blind spot, Kotlin/AGP/SDK-level never-auto-safe rule, verify-by-build-not-resolve | bumping Android dependency versions |
+| references/apk-security-review.md | post-build APK/AAB forensic security pass: toolchain, Flutter-`libapp.so` secrets trap, critical-blocker list, severity scoring, never-auto-edit list | reviewing a built Android artifact before release |
+| references/audits.md | OWASP Mobile Top 10 checklist, Flutter localization audit (ICU plurals/RTL), Flutter/pub dependency audit (discontinued/license/pinning) | a standalone security/i18n/dependency audit pass, not per-PR review |
+| references/kmp.md | Kotlin Multiplatform: expect/actual vs interface+DI, Android-to-KMP incremental migration order and anti-patterns | adding an iOS target to an existing native Android app via KMP |
+| references/flutter-games.md | Flutter Flame 2D games: dt-clamping, collision, hybrid overlay UI, monetization + kids-safety checklist | building a Flame/game-loop project, not general app UI |
 | [../../shared/context7.md](../../shared/context7.md) | Flutter/React Native/SwiftUI/Kotlin API syntax before writing against it — New Arch/Expo/Compose move fast | unfamiliar SDK API or a version-pinned mobile dep |
 
 ## Boundaries

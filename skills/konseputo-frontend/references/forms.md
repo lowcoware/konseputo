@@ -45,5 +45,13 @@ double-submit bug in `ai-bug-patterns-fe.md` — don't re-derive those.
     `"off"`) are a conversion lever, not just a convenience nicety.
     [Zuko/DigitalApplied: form conversion-rate benchmarks 2026](https://www.digitalapplied.com/blog/form-conversion-rate-benchmarks-2026-data-points)
 
+11. **Input font-size floor: 16px on mobile.** Any text/email/number input
+    styled below 16px triggers iOS Safari's auto-zoom on focus (it zooms
+    the viewport to make the text legible, then the user has to manually
+    zoom back out). Set the base input font-size to `1rem`/16px minimum on
+    mobile breakpoints even when the surrounding design uses a smaller
+    scale for labels/hints — this is a platform behavior, not a design
+    preference, and there's no override.
+
 Source: [vee-validate + Zod](https://vee-validate.logaretm.com/v4/integrations/zod-schema-validation/);
 rules 6-9 from nexu-io/open-design craft/form-validation.md (Apache-2.0), re-expressed.

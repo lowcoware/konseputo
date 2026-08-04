@@ -135,3 +135,40 @@ Classified as: <bug|spec|ADR|status-check|process|partner-update>
 Routed to: <playbook/skill>
 In scope now / deferred to roadmap: <which, and why>
 ```
+
+## Completion digest (optional, for a spec worth cross-referencing later)
+
+For a spec substantial enough that a future search ("did we already
+decide how we handle X") should be able to find it — not every spec
+needs one, this is for the ones worth being findable independent of
+reading the whole spec again. Written after the spec archives, distinct
+from the spec itself and from an ADR:
+
+```markdown
+# <spec-id> digest
+
+## Tags
+Keywords a future search would actually use — not the spec's title
+restated, the concepts it touches.
+
+## What was built
+One paragraph, plain terms.
+
+## Rejected alternatives
+What else was considered and why it lost — not just the chosen path.
+This is what makes the digest useful for "didn't we already try X" six
+months later.
+
+## Rules established
+Any durable "we do X this way now" that came out of this spec, worth
+knowing without re-reading the whole thing.
+
+## Related
+Other specs/ADRs this connects to.
+```
+
+**Deviation note** — if implementation diverged from the approved plan
+during the work (not big enough for a standalone ADR, but a real
+departure worth recording), it belongs in the spec's own Decision Log
+(`spec-driven.md`) at the time it happened — the digest above summarizes
+after the fact, it isn't where a live deviation gets first recorded.

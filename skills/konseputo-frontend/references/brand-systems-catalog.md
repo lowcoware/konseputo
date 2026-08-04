@@ -8,6 +8,8 @@ brand packages, each the same machine-readable shape — `manifest.json`
 
 ## Usage protocol
 
+0. Brand named isn't in either list below → it's not in the catalog. Don't
+   fabricate its system from memory — extract it fresh: brand-extraction.md.
 1. Brief says "make it like <brand>" or names an aesthetic family below →
    open that package's `DESIGN.md` + `tokens.css` and use them as the
    EVIDENCE source for the project's own DESIGN.md (design-contract.md

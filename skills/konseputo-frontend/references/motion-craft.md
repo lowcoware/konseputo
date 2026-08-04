@@ -39,6 +39,14 @@ user is reading or acting on hinders: an animated line-draw on a functional
 graph is worse than static. Mouse-tracking decor is fine on marketing,
 wrong on a dashboard.
 
+**Hard exclusion, not a judgment call:** trust-critical content never gets
+fade/delay/entrance animation — error messages, auth failures, validation
+messages, consent prompts, payment/pricing details, legal notices, and
+destructive-action confirmations. An animated entrance delay on any of
+these reads as (and functionally is) hiding information the user needs
+immediately; this fails the gate regardless of how the four questions
+above would otherwise score it.
+
 **Rejected candidates are part of any motion proposal/audit output**: list
 2-5 places considered and deliberately NOT animated, each with the gate
 question that killed it. A proposal with no rejections is a wishlist.

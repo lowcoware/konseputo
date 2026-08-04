@@ -47,6 +47,41 @@ Error's message is content the model reads and can use to retry
 correctly. Error text should give "specific and actionable improvements,"
 not opaque codes or a raw traceback.
 
+## Database access — one generic query tool + schema-as-skill, as an alternative to per-operation tools
+
+For an agent that needs to query a database, the granularity tradeoff
+above (§ "Tool granularity") has a specific, concrete resolution worth
+naming: instead of exposing many narrow tools (`get_user`, `list_orders`,
+`sum_revenue`, ...), expose ONE generic SQL-execution tool per database
+(`sql_<dbname>`, takes a raw query string, returns JSON rows with a
+row-limit) — and pair it with a companion SKILL.md documenting that
+specific schema: tables/columns/relationships, and critically, the
+business conventions a raw schema read wouldn't reveal ("amounts are
+stored in cents, not dollars," "cancelled orders are excluded from
+revenue," "compute totals from line items, don't trust the stored total
+column — it can drift"). The skill file is the cached schema knowledge,
+so the agent isn't re-introspecting the database structure on every
+session. This trades tool-level safety (a narrow `get_user` tool can't
+accidentally run a cross-table join) for flexibility and much lower
+tool-definition overhead — reach for it when the access pattern is
+genuinely exploratory/analytical, not when a small fixed set of
+operations covers the real need (that case is still better served by
+narrow task-shaped tools per the granularity guidance above). Read
+permission-tiering still applies regardless of which shape is chosen —
+gate the generic query tool's connection at readonly/write/full per
+deployment, same as any DB-access tool. **Two layers, not one**:
+app-level query-shape validation (regex-checking that a "readonly" tool's
+query isn't a disguised write) is defense-in-depth, not the actual
+guarantee — the real enforcement is database-level, a genuinely
+read-only replica connection or a Postgres role granted only `SELECT`.
+An app-level check alone is bypassable by any query shape the validator
+didn't anticipate; the DB-level grant isn't. Two narrower mechanical
+rails worth adding regardless of tool shape: block `UPDATE`/`DELETE`
+with no `WHERE` clause outright (a missing filter on a mutating query is
+never intentional), and block multiple SQL statements in a single call
+(stops one injected/malformed call from doing more than the one thing it
+was authorized for).
+
 ## Context-window budget
 
 1. Cap response size deliberately — paginate/filter/truncate with sane

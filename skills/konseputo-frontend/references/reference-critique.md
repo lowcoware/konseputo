@@ -19,8 +19,14 @@ doesn't apply, use design-contract.md / reference-mining.md instead.
 
 1. **Capture the current state** — redesign.md §2's audit (brand tokens,
    IA, patterns to preserve/retire) if this is a real redesign; otherwise
-   read the live code/DESIGN.md/a screenshot directly.
-2. **Mechanical pass first.** Run interface-audit.md's 48 rules before any
+   read the live code/DESIGN.md/a screenshot directly. **Budget the
+   screenshot cost before capturing more than ~3 routes** — each image
+   costs real tokens through vision (order of ~2500 each); an audit that
+   screenshots every route in a large app without planning for this can
+   blow the budget before the comparison work even starts. Sample
+   representative routes/states instead of exhaustively capturing
+   everything, and say so in the output.
+2. **Mechanical pass first.** Run interface-audit.md's 55 rules before any
    taste discussion — broken basics (missing focus states, hydration
    mismatch, bad touch targets) are findings regardless of any reference,
    cheaper to catch this way, and they'd otherwise pollute the taste
@@ -55,6 +61,17 @@ doesn't apply, use design-contract.md / reference-mining.md instead.
    wants it rendered, `design-templates/critique/` (5-dimension radar
    report) or konseputo-artifact both take this finding list as input — don't
    duplicate their rendering logic here, this file stops at the findings.
+
+## Escalating a repeated miss into a permanent rule
+
+If the user reports the same category of miss more than once across
+review sessions on the same project (a real bug this process should have
+caught but didn't), that's a signal the ruleset itself has a gap, not
+just an isolated slip. Don't just note it and move on — after the same
+category misses 3+ times, it earns a permanent addition to the relevant
+reference file (interface-audit.md for a mechanical miss, ai-tells.md for
+a taste miss) rather than staying a one-off correction re-explained each
+session. A miss that never gets promoted just repeats.
 
 ## Boundaries
 

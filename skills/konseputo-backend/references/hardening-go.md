@@ -156,6 +156,27 @@ from `zuoyebang/aiweave`'s concurrency-design methodology (Apache-2.0).
    both into `codes.Internal` (a common shortcut) breaks client-side retry
    logic, since only some codes are safely retryable.
 
+## Error-handling idiom
+
+1. **Handle an error exactly once — log OR wrap-and-return, never both.**
+   Logging an error and then also returning/wrapping it duplicates the
+   same failure up the call stack — every layer that does both produces
+   a repeated log line for one real failure, and the eventual top-level
+   log is redundant noise instead of a single clear signal.
+2. **Error strings never prefixed with "failed to"/"unable to."** Those
+   phrases stack into unreadable repetition once an error gets wrapped
+   several levels deep (`failed to failed to unable to read index`).
+   State what was being attempted, not that it failed — the fact that
+   it's an error is already carried by the error type itself:
+   `fmt.Errorf("read index: %w", err)`, not
+   `fmt.Errorf("failed to read index: %w", err)`.
+3. **`errgroup.Group` with `SetLimit`, not a hand-rolled semaphore
+   channel, for bounded concurrent work.** One primitive bounds
+   concurrency, propagates the first error, and cancels the shared
+   context together — a hand-rolled `chan struct{}` semaphore does the
+   bounding but usually misses the error-propagation and cancellation
+   parts, which then get bolted on separately and inconsistently.
+
 ## Logging discipline
 
 1. A debug-level log path gated by a flag that defaults `true`, or any
@@ -169,6 +190,34 @@ from `zuoyebang/aiweave`'s concurrency-design methodology (Apache-2.0).
 3. Correlation IDs are opaque; PII/secrets are filtered by the logging
    middleware itself (a design property), not by remembering not to log
    them at each call site. [OWASP Microservices Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Microservices_Security_Cheat_Sheet.html)
+4. **Log at the boundary layer, not in every layer a call passes through.**
+   Service/data/repository layers propagate errors via return values and
+   don't log themselves — logging happens once, at the layer that owns the
+   request boundary (an HTTP handler, a queue consumer, a cron entrypoint).
+   The same lower-layer method is often reached from multiple entry points;
+   layer-local logging both duplicates the same event once per call site
+   AND misjudges severity — a "record not found" is a normal, expected
+   `ErrNotFound` at the repository layer, and only the boundary layer knows
+   whether that's a real WARN/ERROR (a user hit a stale link) or entirely
+   routine (an existence check that's supposed to sometimes miss).
+
+## IO aggregation — the same bug class as N+1, one fix
+
+5. **Batch-first.** A loop calling a single-item fetch/write method per
+   iteration is the N+1 pattern regardless of which layer it's in — reach
+   for (or add) a `*List`/batch-shaped method instead of looping a
+   singular one.
+6. **Independent-but-serial IO is the same bug wearing different clothes.**
+   Multiple unrelated reads awaited one after another (`await a(); await
+   b(); await c()` with no data dependency between them) pays their sum in
+   latency for no reason — fan them out concurrently (goroutines +
+   `errgroup`, or the language's equivalent) and aggregate. Only a genuine
+   data dependency (b needs a's result) justifies serial awaiting.
+7. **The reverse mistake exists too — don't over-parallelize a single
+   query, and don't double-wrap an already-locally-cached read** in
+   another concurrency layer; parallelism has coordination overhead, and
+   applying it where there's no independent IO to overlap just adds
+   goroutines with nothing to gain.
 
 ## Pagination
 
@@ -290,3 +339,40 @@ when its access pattern genuinely doesn't fit (the `stores-*.md` files).
 
 Contested schema shape (the aggregate boundary, event-sourcing vs CRUD, one
 big table vs split) → `konseputo-brainstorm` first, land as an ADR.
+
+## Binary size — when image size/cold-start/registry-transfer cost matters
+
+Not a default optimization — relevant when container image size,
+serverless cold-start, or CI artifact-transfer time is a real constraint,
+not speculatively. Ordered by measured impact, biggest first:
+
+1. **`-ldflags="-s -w"`** (strip symbol table and DWARF debug info) —
+   25-35% raw reduction, the single largest win, do this first before
+   anything else on the list.
+2. **`-gcflags=all=-l`** (disable inlining) — an additional 5-10 points,
+   but this trades against hot-path latency. Measure both build variants
+   under real load before shipping the smaller one; a size win that costs
+   real request latency isn't free.
+3. **`CGO_ENABLED=0` + `-tags netgo,osusergo` together** — can
+   paradoxically INCREASE size for a service with large C-backed
+   dependencies (heavy cloud SDKs, for example). Build both ways and
+   compare actual output size — don't assume static-linking is always
+   smaller.
+4. **Repo-specific build tags gating optional heavyweight features** —
+   check `goreleaser.yaml`/the Dockerfile/CI config for existing `-tags`
+   usage before adding new ones; a project may already have a smaller
+   build variant nobody's using in the default build path.
+5. **Watch for packages that weaken dead-code elimination**: `plugin`,
+   `reflect`, `text/template`, `html/template`, `embed`, `time/tzdata` —
+   importing any of these can pull in more of the runtime than the
+   import itself suggests, defeating the linker's ability to strip
+   unused code.
+
+Anti-patterns: never treat PGO (profile-guided optimization) as a size
+technique — it's a speed technique, orthogonal to this list. Never run
+UPX after code-signing on macOS (the compressed binary fails signature
+verification and gets SIGKILL'd at launch). Never declare success from
+raw byte count alone — measure raw size, compressed/registry-transfer
+size, AND runtime behavior (startup time, memory) together; a smaller
+binary that's slower to start defeats the point on a cold-start-sensitive
+deployment.

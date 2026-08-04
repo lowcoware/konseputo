@@ -33,6 +33,13 @@ responses, not one:
    sprawls into one giant diff.
 2. **Detect it**: if a diff arrives at 400+ lines anyway, the reviewer's
    first move is asking for a decompose, not reviewing it whole.
+3. **When decompose genuinely isn't an option** (the work is already done,
+   there's no time to re-slice) — get explicit consent to switch into an
+   iterative mode instead of silently reviewing cold: file by file,
+   holding findings in working memory and aggregating them at the end,
+   rather than one whole-diff pass. This is the fallback path when
+   decompose isn't possible, not a replacement for the decompose-first
+   rule above.
 
 ## Numeric escalation gates — thresholds, not vibes
 
@@ -101,6 +108,7 @@ time of the slowest layer, not the sum:
 | Layer | Subagent checks |
 |---|---|
 | Contracts | proto/OpenAPI/AsyncAPI vs actual handlers — drift, undocumented fields |
+| Architecture | changed code vs. the ADR set (`adr.md`'s classification: does this diff Correct/Refine/Conflict-with/introduce New-vs an existing decision) — a "corpus gap" signal (the touched area has zero documented decisions) is itself worth surfacing, not a silent pass |
 | Data | migrations, indexes, soft-delete consistency, explicit FKs |
 | Security | authn/authz on every endpoint, secrets handling, rate limits present |
 | Tests | coverage gate, contract tests per seam, assert-less tests |
@@ -117,6 +125,90 @@ at larger scale: a layer whose BLOCKs cross that threshold becomes one
 named "pay down X debt" spec, not a pile of disconnected tickets nobody
 prioritizes. The debt-aggregation threshold exists specifically to prevent
 review findings from becoming a backlog graveyard.
+
+## A review too large for one pass — checkpoint, don't restart
+
+A whole-service audit or a long checklist-driven security sweep can
+genuinely outgrow one context window. Three pieces make it resumable
+instead of a gamble on finishing before running out of room:
+
+1. **Persist progress as it runs** — a state record shaped like `{scope,
+   commit, ledger: {itemId: {status, evidence}}}` — so a review that runs
+   out of room checkpoints where it stopped and resumes from there,
+   rather than restarting from zero and re-spending the budget already
+   spent.
+2. **A coverage gate blocks "done."** Every applicable checklist item
+   needs an explicit verdict (PASS / FAIL / N/A / DEFERRED) before the
+   review reports complete — a silently-skipped item is indistinguishable
+   from a passed one otherwise, which defeats the point of having a
+   checklist at all.
+3. **Findings need reachability, not just a pattern match.** A finding
+   confirmed by reading the actual path from input to the flagged
+   behavior is real; a pattern that merely looks concerning in isolation
+   is a candidate worth investigating, not yet a finding — reporting it
+   without confirming reachability inflates false-positive rate and
+   erodes trust in the review that produced it.
+
+## Tone discipline for review output and PM artifacts
+
+A finding, a commit message, a PR description, or a ticket earns three
+checkable tests before it stays as written — this is mechanical, not a
+banned-word list:
+
+1. **Deletion test** — remove the sentence; did the reader lose a fact?
+   If not, it wasn't carrying information.
+2. **Subject test** — is the sentence about the change, or about the
+   author's diligence? "Carefully verified X" is about the author;
+   "X returns 409 on duplicate" is about the change.
+3. **Voice test** — would a terse maintainer write this, or does it read
+   like a cover letter?
+
+Two recurring failure modes this catches: **announcing the expected**
+("tests pass", "linters clean" — that's the baseline, not news; only
+state a check's status to flag an EXCEPTION to it) and **self-praise
+framing** ("clean", "robust", "the honest fix", "I carefully..."). Applies
+across commit messages, PR descriptions, review findings, tickets, and
+changelog entries — the same discipline everywhere PM output gets
+written, not a special rule for one artifact type.
+
+## Multi-lens review — declare blocking policy per lens, not globally
+
+For a review that fans out specialized lenses (security, error-handling,
+concurrency, performance, API-design, test-quality, accessibility,
+data-safety — same shape as the layer-sharded audit above, applied to a
+diff instead of a whole service), declare per-lens blocking policy
+explicitly rather than letting every lens block by default: an
+`alwaysBlock` list (injection, auth-bypass, hardcoded-secrets — never
+downgraded regardless of context) and a `neverBlock` list (findings that
+surface as WARN/INFO no matter how the lens phrases them). Route
+higher-risk lenses (security, concurrency) to stronger review effort by
+default — not every lens needs the same depth on every diff.
+
+## Closing a review — disposition, not just verdict
+
+A review concluding (with or without fixes applied) isn't done until the
+reviewed unit of work gets an explicit disposition, distinct from the
+verdict itself: Archive (kept for reference), Delete (superseded,
+no longer needed), or Skip (deliberately left as-is, reason stated).
+Ship-Show-Ask and severity triage answer "was this okay" — disposition
+answers "what happens to the tracking artifact now" — a real gap when
+nothing currently owns what happens to a completed spec's directory or
+tracking entry once review passes.
+
+## Reconciling conflicting sources — precedence, then adversarial check
+
+When code, docs, and conversation history about a project's state
+disagree (a "catch me up" or status-reconciliation situation), resolve
+by a fixed precedence, not by whichever source was read last: current
+code/git state outranks a committed decision record, which outranks
+docs, which outranks recent conversation, which outranks older
+conversation — code and git arbitrate what actually happened, since
+everything else is a claim ABOUT what happened. Then run a skeptic pass
+that tries to REFUTE each material claim against the code/git ground
+truth, defaulting anything unconfirmed to "unverified" and listing it in
+a dedicated Contradictions/Unverified section rather than asserting it
+as settled — the same citation discipline `conventions.md` already
+requires, applied specifically to reconciling sources that disagree.
 
 ## Pairs-with-konseputo-review division of labor
 

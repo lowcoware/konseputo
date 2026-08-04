@@ -41,6 +41,28 @@ orders/
 3. Test: describe the file in one sentence without "and". Can't → split at the "and".
 4. Functions: extract when a block has a name and a reason, not at N lines.
 
+## Splitting safely, once the decision above says split
+
+The rule above decides WHEN; this is HOW without breaking the build
+mid-refactor. Classify the split by risk before starting:
+
+| Tier | Shape | Safety requirement |
+|---|---|---|
+| Low | Single-file internal refactor (extract a function within the same file) | None beyond normal review |
+| Medium | Extract to a new file, same package/module | Build/test pass after the move, before moving on |
+| High | Split into multiple new files/modules | Write the new files → verify the build compiles → only then delete the old content, one file at a time, git-committing between rounds (max 3-5 files per round) |
+| Critical | Changes build-config or module/package boundaries | Explicit user approval before starting, not just before merging |
+
+**The File Split Trap** (why High-tier needs the write-verify-delete order,
+not a single big move): text-based splitting can cut a function body
+mid-definition, leave an orphaned closing brace that becomes a syntax
+error only in the file it landed in, or produce a barrel/index file that
+misses a re-export — and in TS/JS specifically, `export *` does not
+forward default exports, so a mechanical split silently drops one. None
+of these show up until the build runs — verifying after each small round
+catches them one mistake at a time instead of debugging a tangle of
+simultaneous breaks across a dozen new files.
+
 ## Python: FastAPI
 
 Only where Python earns it (ML/AI/embeddings, bots, parsers).

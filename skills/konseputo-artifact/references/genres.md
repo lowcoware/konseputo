@@ -38,7 +38,9 @@ Rules specific to this genre:
    the flow — don't leave it as a static picture when motion would make it
    click faster. Motivation gate still applies: name what the animation
    explains (konseputo-frontend/motion-craft.md §1) — decoration for its own
-   sake is still a `tell:` even in a one-off artifact.
+   sake is still a `tell:` even in a one-off artifact. Concrete mechanics
+   (flowing dashed connectors, traveling request dots, z-order, the SMIL
+   reduced-motion gotcha): `animated-connectors.md`.
 3. **Theme the SVG through CSS variables**, never hard-coded hex inside
    `<svg>` — see `dark-mode.md`. A diagram that ignores the toggle is a bug.
 4. **Overlays are always dismissible and always reachable again.** Any
@@ -48,3 +50,21 @@ Rules specific to this genre:
    permanently blocks the stage underneath it.
 5. **Pan and zoom are almost always needed** — architecture diagrams exceed
    the screen. Full technique: `pan-zoom.md`.
+6. **Component-type color coding, not per-node improvisation.** Pick one
+   fill/stroke pair per component *type* (frontend, backend, database,
+   external/cloud, security, message-bus) and reuse it for every node of
+   that type — inventing a new color per box is what makes AI-generated
+   diagrams look arbitrary. Security/trust boundaries get a dashed stroke,
+   not a solid one, so the eye reads "boundary" instead of "component" on
+   sight.
+7. **Spacing has to be computed, not eyeballed.** Node overlap and
+   legends colliding with boundary boxes are the #1 way a generated diagram
+   reads as broken. Before placing anything: fix a minimum gap between
+   stacked nodes (don't let two boxes closer than ~2/3 of a node's own
+   height), and place the legend only after every boundary box's extent is
+   known — legend top >= lowest boundary's bottom edge + a real margin, not
+   "wherever fit". If a connector (bus/queue label) sits between two nodes,
+   center it in the gap, don't let it touch either box.
+
+Export-to-image is a common ask for this genre specifically (share a
+diagram outside the chat) — pattern and copy-paste snippet: `export-toolbar.md`.

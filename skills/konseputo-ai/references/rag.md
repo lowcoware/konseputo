@@ -1,5 +1,14 @@
 # RAG pipelines — chunking, retrieval, embedding hygiene
 
+## Vector store choice — before any of the below
+
+Don't default to standing up Qdrant for every RAG feature. If the project
+already runs Postgres and the corpus is small-to-medium (low millions of
+vectors or fewer), pgvector avoids a second stateful service entirely —
+detail and golden-path config: `pgvector.md`. Qdrant earns its place at
+real scale or real multitenancy/filtering needs (`qdrant.md`), same ladder
+discipline as skipping a speculative eval harness below.
+
 ## Chunking
 
 1. Default: 256-512 token chunks, 10-20% overlap, via a **structure-aware**

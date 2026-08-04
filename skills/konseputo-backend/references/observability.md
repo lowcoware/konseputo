@@ -104,6 +104,52 @@ Blessed stack: Prometheus, Grafana, Loki + Promtail, Alertmanager, Sentry.
    transaction/span sampling). Set `release` (or `SENTRY_RELEASE`) for
    deploy tracking.
 
+## Diagnosing "it's slow" — the USE Method
+
+When latency/throughput looks wrong and the cause isn't obvious from the
+correlation story below, don't guess at a cause — walk each resource
+(CPU, memory, disk I/O, network) through three questions systematically
+before concluding anything (Brendan Gregg's USE Method, general-purpose,
+not tied to any specific datastore):
+
+- **Utilization** — how busy is it, as a percentage of capacity, over the
+  window that matters?
+- **Saturation** — is work queued waiting for this resource (run queue
+  length, swap activity, disk queue depth)? A resource can be under 100%
+  utilized and still be the bottleneck if queueing is happening.
+- **Errors** — is the resource throwing errors (retransmits, ECC errors,
+  dropped packets) that themselves cost time independent of utilization?
+
+Checking all three for each resource, in order, before forming a
+hypothesis, catches classes of bug that jumping straight to "must be the
+database" misses — a saturated but low-utilization disk queue, or a
+network interface silently retransmitting, look nothing like a CPU
+bottleneck but cost the same p99 regression.
+
+### Two Postgres diagnostics worth having memorized
+
+Detection-grep style, same spirit as security-checklist.md's checks —
+mechanical, copy-pasteable, catch a common real bug class before it's a
+production incident:
+
+```sql
+-- Unindexed foreign keys (a real FK join with no supporting index)
+SELECT c.conname, c.conrelid::regclass AS table_name, a.attname AS column_name
+FROM pg_constraint c
+JOIN pg_attribute a ON a.attnum = ANY(c.conkey) AND a.attrelid = c.conrelid
+WHERE c.contype = 'f'
+  AND NOT EXISTS (
+    SELECT 1 FROM pg_index i
+    WHERE i.indrelid = c.conrelid AND a.attnum = ANY(i.indkey)
+  );
+
+-- Slowest queries by mean execution time (requires pg_stat_statements)
+SELECT query, mean_exec_time, calls
+FROM pg_stat_statements
+WHERE mean_exec_time > 100
+ORDER BY mean_exec_time DESC;
+```
+
 ## The correlation story — connect the three signals
 
 `correlation_id`/`trace_id` (baseline requires propagating them) is what

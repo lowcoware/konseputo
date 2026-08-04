@@ -2,6 +2,17 @@
 
 Tokens live in the PROJECT (DESIGN.md + `@theme`). Rules live in this skill. "konseputo" is the suite name, NOT a theme mandate — theme is a per-project decision recorded in DESIGN.md.
 
+**Ceiling:** this file's DESIGN.md + `@theme` pair is deliberately the
+lightweight end — one web app, Tailwind is both the source of truth and
+the build output, no separate compile step. Escalate past it only when a
+real cross-tool need shows up: tokens need to round-trip with Figma
+variables, or the same values need to ship to a native iOS/Android app
+alongside the web one. That's the DTCG format (Design Tokens Community
+Group spec) + a build tool like Terrazzo — a real JSON token source
+compiled to per-platform outputs. Don't reach for it pre-emptively "for
+portability" on a single-app project; it's a token *compiler*, and a
+compiler with nothing yet to compile to is pure overhead.
+
 ## 1. DESIGN.md protocol (per project)
 
 1. Project bring-up → GENERATE `DESIGN.md` at repo root before the first component. No DESIGN.md = no UI code.
@@ -58,6 +69,7 @@ Tokens live in the PROJECT (DESIGN.md + `@theme`). Rules live in this skill. "ko
 12. ONE section-rhythm token (64-128px) for vertical space between page sections. Use it everywhere.
 12a. Space by relationship, not by token: tight inside a group, generous between groups. One value stamped everywhere (`gap-4`/`p-4`/`space-y-4` for both within-group and between-group distances) means proximity stops carrying information — a heading must sit visibly closer to its own body than to the previous section. The scale (rule 10) says which values exist; the relationship says which one to pick, and picking the same one twice in a row for different relationships is the tell.
 13. Radius values ∈ DESIGN.md scale. One radius system per project. Card radius cap 12-16px (per `ai-tells.md`).
+13a. A reusable card/panel that gets dropped into different-width containers (sidebar today, main column tomorrow, a modal later) sizes off its own container, not the viewport: `container-type: inline-size` on the wrapper, `@container (min-width: ...)` on the internal layout switch. Viewport media queries answer "how wide is the screen"; container queries answer "how wide is THIS box" — the component breaks the same way in every context. Reach for a viewport breakpoint only for page-level structure (sidebar collapse, nav to hamburger); reach for a container query for anything reusable that doesn't know where it'll be dropped.
 
 ## 5. Dark surface ladder — Linear canon (PER-PROJECT OPTION, NOT DEFAULT)
 

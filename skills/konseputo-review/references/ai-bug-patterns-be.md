@@ -10,6 +10,21 @@ against this suite's own real project history, marked
 
 Frontend AI-bug/perf patterns: `ai-bug-patterns-fe.md`.
 
+## Comment truth, not just comment style
+
+A distinct check from anything else in this catalog: verify every factual
+claim a new/changed comment or docstring makes against the code beneath
+it — does the described parameter list match the actual signature, does
+the described behavior match the actual logic, do referenced types/
+functions actually exist, is an edge case claimed as "handled" actually
+handled in the code as written. A comment can read perfectly (good
+grammar, plausible-sounding claim) and still be factually wrong about
+what the code does — that's a distinct failure from comment STYLE
+(which `ai-tells.md`-adjacent copy checks in the frontend catalog cover)
+and isn't caught by any correctness check that only reads the code
+itself, since the comment's claim and the code's behavior have to be
+compared against EACH OTHER, not each checked independently.
+
 ## BE — `bug:` (correctness, catchable from a diff)
 
 ### Concurrency
@@ -121,6 +136,12 @@ because it's syntactically clean and passes a single-call test.
 Swallows `KeyboardInterrupt`/`SystemExit` too, or masks failures from lines
 the `try` didn't need to cover. *Fix:* narrow to the exception types the
 guarded call actually raises; never a silent `pass` with no log/re-raise.
+Don't just flag the block as "too broad" — name what it hides: list every
+specific error type this catch would swallow beyond the one it's
+intended for (a `NullPointerException` alongside the intended `IOException`,
+a `KeyError` alongside the intended `ValueError`). An enumerated list of
+hidden failure modes is a more actionable finding than "this catch is
+too wide."
 
 **`is`/`is not` against a literal (string, number, tuple).** Relies on
 CPython's implementation-specific interning rather than value equality —
@@ -270,6 +291,16 @@ that matters, not the mock's own return value. Full framing (why "all green"
 undersells the risk on agent-authored code specifically):
 `../references/review-process.md`.
 [Are Coding Agents Generating Over-Mocked Tests?, MSR'26](https://andrehora.github.io/pub/2026-msr-agents-over-mocked-tests.pdf)
+
+**Missing test needs a named, stated exemption — not just silence.** A
+diff with no new test is only acceptable when it falls into a named
+exemption category (config-only change, dependency/version bump, a
+constant-or-flag-default change, pure data/copy) AND the PR states which
+category and why — an unstated absence still gets flagged as missing,
+even if it would have qualified for an exemption had one been named. The
+inverse holds too: a new test on a change that qualifies as exempt is
+itself worth a note — unwarranted test scaffolding on a config-only
+change is scope creep, not diligence.
 
 ## BE — `arch:` (decisions that compound over months, not today)
 
